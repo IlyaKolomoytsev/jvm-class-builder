@@ -57,7 +57,7 @@ namespace Jvm
         Class(std::string name);
 
     private:
-        void toBinary(std::ostream& os);
+        void toBinary(std::ostream& os) const;
 
         std::vector<Constant*> constants_{};
         std::set<AccessFlags> accessFlags_{};

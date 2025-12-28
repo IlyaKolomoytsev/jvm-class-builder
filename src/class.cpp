@@ -6,7 +6,7 @@
 
 using namespace Jvm;
 
-void Class::toBinary(std::ostream& os)
+void Class::toBinary(std::ostream& os) const
 {
     // u4             magic;
     static uint32_t magicNumber = 0xCAFEBABE;
