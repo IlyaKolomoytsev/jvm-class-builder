@@ -56,6 +56,10 @@ namespace Jvm
     public:
         Class(std::string name);
 
+        void addNewConstant(Constant* constant);
+
+        std::span<Constant*> constants();
+
     private:
         void toBinary(std::ostream& os) const;
 

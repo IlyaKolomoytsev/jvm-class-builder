@@ -5,10 +5,12 @@ set(CMAKE_CXX_STANDARD 20)
 
 set(HEADERS
         src/class.h
+        src/constant.h
 )
 
 set(SOURCE
         src/class.cpp
+        src/constant.cpp
 )
 
 add_library(jvm_c STATIC

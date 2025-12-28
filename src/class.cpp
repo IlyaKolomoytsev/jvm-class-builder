@@ -1,5 +1,5 @@
 #include "class.h"
-
+#include "constant.h"
 
 #include <cstdint>
 #include <ostream>
@@ -8,6 +8,17 @@ using namespace Jvm;
 
 MajorVersion Class::majorVersion = MAJOR_VERSION_16;
 uint16_t Class::minorVersion = 0x0000;
+
+void Class::addNewConstant(Constant* constant)
+{
+    constants_.push_back(constant);
+    constant->setIndex(constants_.size());
+}
+
+std::span<Constant*> Class::constants()
+{
+    return constants_;
+}
 
 void Class::toBinary(std::ostream& os) const
 {
