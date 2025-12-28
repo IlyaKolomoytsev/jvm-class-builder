@@ -6,6 +6,9 @@
 
 using namespace Jvm;
 
+MajorVersion Class::majorVersion = MAJOR_VERSION_16;
+uint16_t Class::minorVersion = 0x0000;
+
 void Class::toBinary(std::ostream& os) const
 {
     // u4             magic;
