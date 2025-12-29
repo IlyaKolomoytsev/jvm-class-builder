@@ -8,6 +8,7 @@ set(HEADERS
         src/constant.h
         src/constant-utf-8-info.h
         src/field.h
+        src/method.h
 )
 
 set(SOURCE
@@ -15,6 +16,7 @@ set(SOURCE
         src/constant.cpp
         src/constant-utf-8-info.cpp
         src/field.cpp
+        src/method.cpp
 )
 
 add_library(jvm_c STATIC
