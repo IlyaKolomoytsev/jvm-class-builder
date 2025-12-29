@@ -7,12 +7,14 @@ set(HEADERS
         src/class.h
         src/constant.h
         src/constant-utf-8-info.h
+        src/field.h
 )
 
 set(SOURCE
         src/class.cpp
         src/constant.cpp
         src/constant-utf-8-info.cpp
+        src/field.cpp
 )
 
 add_library(jvm_c STATIC
