@@ -11,6 +11,7 @@ set(HEADERS
         src/constant-name-and-type.h
         src/constant-fieldref.h
         src/constant-methodref.h
+        src/constant-interface-methodref.h
         src/field.h
         src/method.h
         src/attribute.h
@@ -24,6 +25,7 @@ set(SOURCE
         src/constant-name-and-type.cpp
         src/constant-fieldref.cpp
         src/constant-methodref.h
+        src/constant-interface-methodref.cpp
         src/field.cpp
         src/method.cpp
         src/attribute.cpp
