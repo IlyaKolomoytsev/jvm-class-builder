@@ -7,6 +7,7 @@ set(HEADERS
         src/class.h
         src/constant.h
         src/constant-utf-8-info.h
+        src/constant-class.h
         src/field.h
         src/method.h
         src/attribute.h
@@ -16,6 +17,7 @@ set(SOURCE
         src/class.cpp
         src/constant.cpp
         src/constant-utf-8-info.cpp
+        src/constant-class.cpp
         src/field.cpp
         src/method.cpp
         src/attribute.cpp
