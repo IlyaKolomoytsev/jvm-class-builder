@@ -1,0 +1,40 @@
+#ifndef JVM__CONSTANT_LONG_H
+#define JVM__CONSTANT_LONG_H
+
+#include "constant.h"
+
+namespace Jvm
+{
+    class ConstantLong : public Constant
+    {
+    public:
+        /**
+         * Looks up and returns an existing constant from constant pool of classOwner or create a new one.
+         * @param value long value.
+         * @param classOwner Class owner.
+         * @return Long constant.
+         */
+        static ConstantLong* getOrCreate(long value, Class* classOwner);
+
+        /**
+         * @return Long value.
+         */
+        [[nodiscard]] int64_t getValue() const;
+
+    protected:
+        void toBinary(std::ostream& os) const override;
+
+    private:
+        /**
+         * Create long constant.
+         * @param value Long value.
+         * @param classOwner Class owner.
+         */
+        ConstantLong(int64_t value, Class* classOwner);
+
+        int64_t value_; ///< Long value.
+    };
+} // namespace Jvm
+
+
+#endif // JVM__CONSTANT_LONG_H
