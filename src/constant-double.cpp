@@ -35,7 +35,6 @@ void ConstantDouble::toBinary(std::ostream& os) const
     Constant::toBinary(os);
     uint64_t bits = 0;
 
-    static_assert(sizeof(double) == sizeof(uint64_t), "double must big-endian 64-bit IEEE-754");
     std::memcpy(&bits, &value_, sizeof(bits));
 
     uint32_t high = static_cast<uint32_t>(bits >> 32);

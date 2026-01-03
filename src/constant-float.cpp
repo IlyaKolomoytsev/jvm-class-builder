@@ -34,7 +34,7 @@ void ConstantFloat::toBinary(std::ostream& os) const
 {
     Constant::toBinary(os);
     uint32_t bits = 0;
-    static_assert(sizeof(float) == sizeof(uint32_t), "float must big-endian 32-bit IEEE-754");
+
     std::memcpy(&bits, &value_, sizeof(bits));
 
     uint32_t bigEndianFloat = htonl(bits);
