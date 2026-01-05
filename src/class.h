@@ -293,6 +293,33 @@ namespace Jvm
          */
         ConstantUtf8Info* getOrCreateUtf8Constant(const std::string& value);
 
+        /* GET OR CREATE METHOD */
+
+        /**
+         * @brief Returns an existing @ref Method "method" with the specified name and descriptor,
+         *        or creates and returns a new one.
+         *
+         * The method is identified by its name and descriptor within this class.
+         *
+         * @param name Method name (e.g. "run", "main", "&lt;init&gt;", "&lt;clinit&gt;").
+         * @param descriptor Method descriptor (e.g. "()V", "([Ljava/lang/String;)V", "(I)Ljava/lang/String;").
+         * @return Method instance owned by this class.
+         */
+        Method* getOrCreateMethod(const std::string& name, const std::string& descriptor);
+
+        /**
+         * @brief Returns an existing @ref Method "method" with the specified name and descriptor,
+         *        or creates and returns a new one.
+         *
+         * The method is identified by its name and descriptor within this class.
+         *
+         * @note The provided constants must have this @c Class instance as their owner.
+         * @param name UTF-8 constant containing the method name.
+         * @param descriptor UTF-8 constant containing the method descriptor.
+         * @return Method instance owned by this class.
+         */
+        Method* getOrCreateMethod(ConstantUtf8Info* name, ConstantUtf8Info* descriptor);
+
         std::span<Constant*> constants();
 
     private:

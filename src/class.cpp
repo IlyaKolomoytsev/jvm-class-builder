@@ -11,6 +11,7 @@
 #include "constant-name-and-type.h"
 #include "constant-string.h"
 #include "constant-utf-8-info.h"
+#include "method.h"
 
 #include <cassert>
 #include <cstdint>
@@ -351,6 +352,33 @@ ConstantUtf8Info* Class::getOrCreateUtf8Constant(const std::string& value)
     auto* utf8Constant = new ConstantUtf8Info(value, this);
     addNewConstant(utf8Constant);
     return utf8Constant;
+}
+
+Method* Class::getOrCreateMethod(const std::string& name, const std::string& descriptor)
+{
+    auto* nameConstant = getOrCreateUtf8Constant(name);
+    auto* descriptorConstant = getOrCreateUtf8Constant(descriptor);
+    return getOrCreateMethod(nameConstant, descriptorConstant);
+}
+
+Method* Class::getOrCreateMethod(ConstantUtf8Info* name, ConstantUtf8Info* descriptor)
+{
+    assert(this == name->getClassOwner());
+    assert(this == descriptor->getClassOwner());
+
+    // search method
+    for (auto* method : methods_)
+    {
+        if (method->getName() == name && method->getDescriptor() == descriptor)
+        {
+            return method;
+        }
+    }
+
+    // create new
+    auto* method = new Method(name, descriptor);
+    methods_.insert(method);
+    return method;
 }
 
 void Class::addNewConstant(Constant* constant)

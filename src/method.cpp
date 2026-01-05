@@ -6,21 +6,6 @@
 
 using namespace Jvm;
 
-Method::Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor)
-{
-    Class* nameOwner = name->getClassOwner();
-    Class* descriptorOwner = descriptor->getClassOwner();
-    assert(nameOwner == descriptorOwner);
-    classOwner_ = nameOwner;
-}
-
-Method::Method(std::string name, std::string descriptor, Class* classOwner) : classOwner_(classOwner)
-{
-    name_ = classOwner->getOrCreateUtf8Constant(name);
-    descriptor_ = classOwner->getOrCreateUtf8Constant(descriptor);
-}
-
-
 void Method::addFlag(AccessFlag flag)
 {
     accessFlags_.insert(flag);
@@ -65,6 +50,15 @@ Class* Method::getClassOwner() const
 {
     return classOwner_;
 }
+
+Method::Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor)
+{
+    Class* nameOwner = name->getClassOwner();
+    Class* descriptorOwner = descriptor->getClassOwner();
+    assert(nameOwner == descriptorOwner);
+    classOwner_ = nameOwner;
+}
+
 
 void Method::toBinary(std::ostream& os) const
 {

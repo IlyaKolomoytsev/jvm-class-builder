@@ -9,6 +9,7 @@ namespace Jvm
 
     class Method
     {
+        friend class Class;
         friend std::ostream& operator<<(std::ostream& os, const Method& method);
 
     public:
@@ -29,22 +30,6 @@ namespace Jvm
             ACC_STRICT = 0x0800, ///< Declared strictfp; floating-point mode is FP-strict.
             ACC_SYNTHETIC = 0x1000, ///< Declared synthetic; not present in the source code.
         };
-
-        /**
-         * Create method with selected name and descriptor.
-         * @param name Pointer to UTF-8 constant with method name.
-         * @param descriptor Pointer to UTF-8 constant with method descriptor.
-         * @Note Name and descriptor must have their own class owner.
-         */
-        Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor);
-
-        /**
-         * Create method with selected name, descriptor and classOwner.
-         * @param name Method name string.
-         * @param descriptor Method descriptor string.
-         * @param classOwner Pointer to class owner.
-         */
-        Method(std::string name, std::string descriptor, Class* classOwner);
 
         /**
          * Add access flag to method.
@@ -97,6 +82,21 @@ namespace Jvm
 
     private:
         /**
+         * @brief Constructs a method with the specified name and descriptor.
+         *
+         * This constructor is intentionally not part of the public API. Instances of @ref Method are owned by a
+         * @ref Class and are registered in the owning class upon creation. Therefore, only @ref Class is allowed
+         * to construct @ref Method objects. To create instances of this class, use @ref Class::getOrCreateMethod.
+         *
+         * @param name Pointer to a UTF-8 constant containing the method name.
+         * @param descriptor Pointer to a UTF-8 constant containing the method descriptor.
+         *
+         * @note The provided constants must have the same class owner.
+         * @see Class::getOrCreateMethod
+         */
+        Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor);
+
+        /**For creation this class use
          * Write object to binary stream.
          * @param os Output stream.
          */
