@@ -408,7 +408,7 @@ void Class::toBinary(std::ostream& os) const
     Utils::writeBigEndian(os, static_cast<uint16_t>(majorVersion));
 
     // u2             constant_pool_count;
-    uint16_t constantCount = static_cast<uint16_t>(constants_.size());
+    uint16_t constantCount = static_cast<uint16_t>(nextCpIndex);
     Utils::writeBigEndian(os, constantCount);
 
     // cp_info        constant_pool[constant_pool_count-1];
