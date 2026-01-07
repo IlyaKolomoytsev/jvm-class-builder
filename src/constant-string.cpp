@@ -1,7 +1,7 @@
 #include "constant-string.h"
 
 #include <ostream>
-#include <utility>
+#include "utils.h"
 
 using namespace Jvm;
 
@@ -14,7 +14,7 @@ void ConstantString::toBinary(std::ostream& os) const
 {
     Constant::toBinary(os);
     uint16_t stringIndex = string_->getIndex();
-    os.write(reinterpret_cast<const char*>(&stringIndex), sizeof(stringIndex));
+    Utils::writeBigEndian(os, stringIndex);
 }
 
 ConstantString::ConstantString(ConstantUtf8Info* utf8StringConstant) :

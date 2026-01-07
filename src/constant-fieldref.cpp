@@ -1,8 +1,7 @@
 #include "constant-fieldref.h"
 
 #include <cassert>
-#include <ostream>
-#include <utility>
+#include "utils.h"
 
 using namespace Jvm;
 
@@ -19,10 +18,12 @@ ConstantNameAndType* ConstantFieldref::getNameAndType() const
 void ConstantFieldref::toBinary(std::ostream& os) const
 {
     Constant::toBinary(os);
+
     uint16_t classIndex = class_->getIndex();
-    os.write(reinterpret_cast<const char*>(&classIndex), sizeof(classIndex));
+    Utils::writeBigEndian(os, classIndex);
+
     uint16_t nameAndTypeIndex = nameAndType_->getIndex();
-    os.write(reinterpret_cast<const char*>(&nameAndTypeIndex), sizeof(nameAndTypeIndex));
+    Utils::writeBigEndian(os, nameAndTypeIndex);
 }
 
 ConstantFieldref::ConstantFieldref(ConstantClass* classConstant, ConstantNameAndType* nameAndTypeConstant) :

@@ -1,8 +1,8 @@
 #include "constant-long.h"
 
 #include <cstring>
-#include <ostream>
 #include <arpa/inet.h>
+#include "utils.h"
 
 using namespace Jvm;
 
@@ -19,17 +19,7 @@ uint16_t ConstantLong::getOccupiedSlots() const
 void ConstantLong::toBinary(std::ostream& os) const
 {
     Constant::toBinary(os);
-
-    uint64_t bits = static_cast<uint64_t>(value_);
-
-    uint32_t high = static_cast<uint32_t>(bits >> 32);
-    uint32_t low = static_cast<uint32_t>(bits & 0xFFFFFFFFULL);
-
-    uint32_t bigEndianHigh = htonl(high);
-    uint32_t bigEndianLow = htonl(low);
-
-    os.write(reinterpret_cast<const char*>(&bigEndianHigh), sizeof(bigEndianHigh));
-    os.write(reinterpret_cast<const char*>(&bigEndianLow), sizeof(bigEndianLow));
+    Utils::writeBigEndian(os, value_);
 }
 
 ConstantLong::ConstantLong(int64_t value, Class* classOwner)

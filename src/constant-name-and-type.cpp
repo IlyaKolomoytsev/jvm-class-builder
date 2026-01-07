@@ -2,7 +2,7 @@
 
 #include <assert.h>
 #include <ostream>
-#include <utility>
+#include "utils.h"
 
 namespace Jvm
 {
@@ -20,9 +20,9 @@ namespace Jvm
     {
         Constant::toBinary(os);
         uint16_t nameIndex = name_->getIndex();
-        os.write(reinterpret_cast<const char*>(&nameIndex), sizeof(nameIndex));
+        Utils::writeBigEndian(os, nameIndex);
         uint16_t descriptorIndex = descriptor_->getIndex();
-        os.write(reinterpret_cast<const char*>(&descriptorIndex), sizeof(descriptorIndex));
+        Utils::writeBigEndian(os, descriptorIndex);
     }
 
     ConstantNameAndType::ConstantNameAndType(ConstantUtf8Info* name, ConstantUtf8Info* descriptor) :
