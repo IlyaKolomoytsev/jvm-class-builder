@@ -20,6 +20,14 @@ set(HEADERS
         src/field.h
         src/method.h
         src/attribute.h
+        src/attribute-code.h
+        src/instruction.h
+        src/instruction-value.h
+        src/instruction-jump.h
+        src/instruction-ldc.h
+        src/instruction-with-constant.h
+        src/label.h
+        src/exception-handler.h
 )
 
 set(SOURCE
@@ -39,6 +47,13 @@ set(SOURCE
         src/field.cpp
         src/method.cpp
         src/attribute.cpp
+        src/attribute-code.cpp
+        src/instruction.cpp
+        src/instruction-jump.cpp
+        src/instruction-ldc.cpp
+        src/instruction-with-constant.cpp
+        src/label.cpp
+        src/exception-handler.cpp
 )
 
 add_library(jvm_c STATIC
