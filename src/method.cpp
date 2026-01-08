@@ -51,6 +51,16 @@ Class* Method::getClassOwner() const
     return classOwner_;
 }
 
+AttributeCode* Method::getCodeAttribute()
+{
+    if (codeAttribute_ == nullptr)
+    {
+        codeAttribute_ = new AttributeCode(this);
+        attributes_.insert(codeAttribute_);
+    }
+    return codeAttribute_;
+}
+
 Method::Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor)
 {
     Class* nameOwner = name->getClassOwner();

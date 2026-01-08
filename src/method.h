@@ -1,6 +1,7 @@
 #ifndef JVM__METHOD_H
 #define JVM__METHOD_H
 
+#include "attribute-code.h"
 #include "constant-utf-8-info.h"
 
 namespace Jvm
@@ -79,6 +80,15 @@ namespace Jvm
          * @return Class owner.
          */
         [[nodiscard]] Class* getClassOwner() const;
+
+        /**
+         * @brief Get code attribute object.
+         *
+         * In first call create @ref AttributeCode for this method.
+         *
+         * @return Code attribute for this method.
+         */
+        AttributeCode* getCodeAttribute();
 
     private:
         /**
