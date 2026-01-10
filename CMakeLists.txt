@@ -6,7 +6,9 @@ project(jvm-class-builder
         LANGUAGES CXX
 )
 
-add_library(jvm-class-builder STATIC
+option(BUILD_SHARED_LIBS "Build libraries as shared" OFF)
+
+add_library(jvm-class-builder
         src/class.cpp
         src/constant.cpp
         src/constant-utf-8-info.cpp
