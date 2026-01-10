@@ -36,12 +36,56 @@ add_library(jvm-class-builder
 )
 
 target_compile_features(jvm-class-builder PUBLIC cxx_std_20)
-set_target_properties(jvm-class-builder PROPERTIES CXX_EXTENSIONS OFF)
+set_target_properties(jvm-class-builder PROPERTIES
+        CXX_EXTENSIONS OFF
+        EXPORT_NAME ClassBuilder
+)
 
 target_include_directories(jvm-class-builder
-        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/internal
-
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+        $<INSTALL_INTERFACE:include>
+        PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/internal
 )
 
 add_library(Jvm::ClassBuilder ALIAS jvm-class-builder)
+
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+install(TARGETS jvm-class-builder
+        EXPORT jvm-class-builderTargets
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(DIRECTORY include/
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+install(EXPORT jvm-class-builderTargets
+        FILE jvm-class-builderTargets.cmake
+        NAMESPACE Jvm::
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/jvm-class-builder
+)
+
+write_basic_package_version_file(
+        "${CMAKE_CURRENT_BINARY_DIR}/jvm-class-builderConfigVersion.cmake"
+        VERSION ${PROJECT_VERSION}
+        COMPATIBILITY SameMajorVersion
+)
+
+configure_package_config_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/cmake/jvm-class-builderConfig.cmake.in
+        ${CMAKE_CURRENT_BINARY_DIR}/jvm-class-builderConfig.cmake
+        INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/jvm-class-builder
+)
+
+install(FILES
+        ${CMAKE_CURRENT_BINARY_DIR}/jvm-class-builderConfig.cmake
+        ${CMAKE_CURRENT_BINARY_DIR}/jvm-class-builderConfigVersion.cmake
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/jvm-class-builder
+)
