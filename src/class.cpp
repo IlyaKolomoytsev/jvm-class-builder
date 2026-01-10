@@ -17,6 +17,7 @@
 #include "jvm/constant-name-and-type.h"
 #include "jvm/constant-string.h"
 #include "jvm/constant-utf-8-info.h"
+#include "jvm/descriptor.h"
 #include "jvm/method.h"
 #include "jvm/internal/utils.h"
 
@@ -294,6 +295,21 @@ ConstantNameAndType* Class::getOrCreateNameAndTypeConstant(const std::string& na
     assert(this == descriptorConstant->getClassOwner());
 
     ConstantUtf8Info* nameConstant = getOrCreateUtf8Constant(name);
+    return getOrCreateNameAndTypeConstant(nameConstant, descriptorConstant);
+}
+
+ConstantNameAndType* Class::getOrCreateNameAndTypeConstant(const std::string& name, const Descriptor& descriptor)
+{
+    ConstantUtf8Info* nameConstant = getOrCreateUtf8Constant(name);
+    ConstantUtf8Info* descriptorConstant = getOrCreateUtf8Constant(descriptor.toString());
+    return getOrCreateNameAndTypeConstant(nameConstant, descriptorConstant);
+}
+
+ConstantNameAndType* Class::getOrCreateNameAndTypeConstant(ConstantUtf8Info* nameConstant, const Descriptor& descriptor)
+{
+    assert(this == nameConstant->getClassOwner());
+
+    ConstantUtf8Info* descriptorConstant = getOrCreateUtf8Constant(descriptor.toString());
     return getOrCreateNameAndTypeConstant(nameConstant, descriptorConstant);
 }
 

@@ -24,6 +24,7 @@ namespace Jvm
     class Field;
     class Method;
     class Attribute;
+    class Descriptor;
 
     enum MajorVersion:uint16_t
     {
@@ -258,6 +259,29 @@ namespace Jvm
          */
         ConstantNameAndType* getOrCreateNameAndTypeConstant(const std::string& name,
                                                             ConstantUtf8Info* descriptorConstant);
+
+        /**
+         * @brief Returns an existing @ref ConstantNameAndType "Name-and-type constant" from this class's constant pool,
+         *        or creates and returns a new one.
+         * @note May create a new @ref ConstantUtf8Info entry for the name.
+         * @note The provided constant must have this @c Class instance as its owner.
+         * @param name Name.
+         * @param descriptor Descriptor object representing a field or method descriptor.
+         * @return Name-and-type constant.
+         */
+        ConstantNameAndType* getOrCreateNameAndTypeConstant(const std::string& name, const Descriptor& descriptor);
+
+        /**
+         * @brief Returns an existing @ref ConstantNameAndType "Name-and-type constant" from this class's constant pool,
+         *        or creates and returns a new one.
+         * @note May create a new @ref ConstantUtf8Info entry for the name.
+         * @note The provided constant must have this @c Class instance as its owner.
+         * @param nameConstant UTF-8 constant containing the name.
+         * @param descriptor Descriptor object representing a field or method descriptor.
+         * @return Name-and-type constant.
+         */
+        ConstantNameAndType* getOrCreateNameAndTypeConstant(ConstantUtf8Info* nameConstant, const Descriptor& descriptor);
+
 
         /**
          * @brief Returns an existing @ref ConstantNameAndType "Name-and-type constant" from this class's constant pool,
