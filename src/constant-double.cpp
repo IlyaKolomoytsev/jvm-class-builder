@@ -1,9 +1,9 @@
-#include "constant-double.h"
+#include "jvm/constant-double.h"
 
 #include <cstring>
 #include <arpa/inet.h>
 
-#include "utils.h"
+#include "internal/utils.h"
 
 using namespace Jvm;
 

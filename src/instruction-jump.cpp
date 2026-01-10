@@ -1,10 +1,10 @@
-#include "instruction-jump.h"
+#include "jvm/instruction-jump.h"
 
 #include <cassert>
 #include <ostream>
 
-#include "attribute-code.h"
-#include "utils.h"
+#include "jvm/attribute-code.h"
+#include "internal/utils.h"
 
 using namespace Jvm;
     Label* InstructionJump::getJumpLabel() const

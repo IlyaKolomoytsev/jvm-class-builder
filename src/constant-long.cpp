@@ -1,8 +1,6 @@
-#include "constant-long.h"
+#include "jvm/constant-long.h"
 
-#include <cstring>
-#include <arpa/inet.h>
-#include "utils.h"
+#include "internal/utils.h"
 
 using namespace Jvm;
 

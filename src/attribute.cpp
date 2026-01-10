@@ -1,8 +1,8 @@
-#include "attribute.h"
+#include "jvm/attribute.h"
 
 #include <ostream>
 
-#include "utils.h"
+#include "internal/utils.h"
 
 using namespace Jvm;
 

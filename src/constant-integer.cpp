@@ -1,8 +1,8 @@
-#include "constant-integer.h"
+#include "jvm/constant-integer.h"
 
 #include <ostream>
-#include <arpa/inet.h>
-#include "utils.h"
+
+#include "internal/utils.h"
 
 using namespace Jvm;
 

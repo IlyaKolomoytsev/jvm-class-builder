@@ -1,4 +1,4 @@
-#include "instruction-ldc.h"
+#include "jvm/instruction-ldc.h"
 
 #include <stdexcept>
 #include <strings.h>

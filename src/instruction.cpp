@@ -1,4 +1,5 @@
-#include "instruction.h"
+#include "jvm/instruction.h"
+
 #include <ostream>
 
 using namespace Jvm;

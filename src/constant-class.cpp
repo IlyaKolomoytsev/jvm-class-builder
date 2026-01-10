@@ -1,8 +1,8 @@
-#include "constant-class.h"
+#include "jvm/constant-class.h"
 
 #include <ostream>
 
-#include "utils.h"
+#include "internal/utils.h"
 
 using namespace Jvm;
 

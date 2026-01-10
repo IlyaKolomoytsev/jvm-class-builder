@@ -1,7 +1,8 @@
-#include "constant-utf-8-info.h"
+#include "jvm/constant-utf-8-info.h"
 
 #include <ostream>
-#include "utils.h"
+
+#include "internal/utils.h"
 
 using namespace Jvm;
 

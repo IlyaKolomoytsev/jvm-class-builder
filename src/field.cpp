@@ -1,4 +1,4 @@
-#include "field.h"
+#include "jvm/field.h"
 
 #include <cassert>
 #include <ostream>

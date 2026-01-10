@@ -1,14 +1,13 @@
-#include "exception-handler.h"
+#include "jvm/exception-handler.h"
 
-#include <assert.h>
-#include <ostream>
+#include <cassert>
 #include <stdexcept>
 
-#include "attribute-code.h"
-#include "constant-class.h"
-#include "instruction.h"
-#include "label.h"
-#include "utils.h"
+#include "jvm/attribute-code.h"
+#include "jvm/constant-class.h"
+#include "jvm/instruction.h"
+#include "jvm/label.h"
+#include "internal/utils.h"
 
 using namespace Jvm;
 

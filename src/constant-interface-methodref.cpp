@@ -1,8 +1,8 @@
-#include "constant-interface-methodref.h"
+#include "jvm/constant-interface-methodref.h"
 
 #include <cassert>
-#include <ostream>
-#include "utils.h"
+
+#include "internal/utils.h"
 
 using namespace Jvm;
 

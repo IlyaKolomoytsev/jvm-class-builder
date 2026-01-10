@@ -1,4 +1,4 @@
-#include "method.h"
+#include "jvm/method.h"
 
 #include <cassert>
 #include <ostream>

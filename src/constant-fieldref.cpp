@@ -1,7 +1,8 @@
-#include "constant-fieldref.h"
+#include "jvm/constant-fieldref.h"
 
 #include <cassert>
-#include "utils.h"
+
+#include "internal/utils.h"
 
 using namespace Jvm;
 

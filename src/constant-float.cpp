@@ -1,7 +1,8 @@
-#include "constant-float.h"
+#include "jvm/constant-float.h"
 
 #include <cstring>
-#include "utils.h"
+
+#include "internal/utils.h"
 
 using namespace Jvm;
 

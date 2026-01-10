@@ -1,43 +1,19 @@
-cmake_minimum_required(VERSION 4.1)
-project(jvm_class_builder_)
+cmake_minimum_required(VERSION 3.20)
 
-set(CMAKE_CXX_STANDARD 20)
-
-set(HEADERS
-        src/class.h
-        src/constant.h
-        src/constant-utf-8-info.h
-        src/constant-class.h
-        src/constant-name-and-type.h
-        src/constant-fieldref.h
-        src/constant-methodref.h
-        src/constant-interface-methodref.h
-        src/constant-string.h
-        src/constant-integer.h
-        src/constant-float.h
-        src/constant-double.h
-        src/constant-long.h
-        src/field.h
-        src/method.h
-        src/attribute.h
-        src/attribute-code.h
-        src/instruction.h
-        src/instruction-value.h
-        src/instruction-jump.h
-        src/instruction-ldc.h
-        src/instruction-with-constant.h
-        src/label.h
-        src/exception-handler.h
+project(jvm-class-builder
+        VERSION 0.1.0
+        DESCRIPTION "Structured JVM class file builder"
+        LANGUAGES CXX
 )
 
-set(SOURCE
+add_library(jvm-class-builder STATIC
         src/class.cpp
         src/constant.cpp
         src/constant-utf-8-info.cpp
         src/constant-class.cpp
         src/constant-name-and-type.cpp
         src/constant-fieldref.cpp
-        src/constant-methodref.h
+        src/constant-methodref.cpp
         src/constant-interface-methodref.cpp
         src/constant-string.cpp
         src/constant-integer.cpp
@@ -54,9 +30,16 @@ set(SOURCE
         src/instruction-with-constant.cpp
         src/label.cpp
         src/exception-handler.cpp
+        src/internal/utils.cpp
 )
 
-add_library(jvm_c STATIC
-        ${HEADERS}
-        ${SOURCE}
+target_compile_features(jvm-class-builder PUBLIC cxx_std_20)
+set_target_properties(jvm-class-builder PROPERTIES CXX_EXTENSIONS OFF)
+
+target_include_directories(jvm-class-builder
+        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/internal
+
 )
+
+add_library(Jvm::ClassBuilder ALIAS jvm-class-builder)

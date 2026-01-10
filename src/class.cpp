@@ -1,24 +1,24 @@
-#include "class.h"
-#include "constant.h"
-#include "constant-class.h"
-#include "constant-double.h"
-#include "constant-fieldref.h"
-#include "constant-float.h"
-#include "constant-integer.h"
-#include "constant-interface-methodref.h"
-#include "constant-long.h"
-#include "constant-methodref.h"
-#include "constant-name-and-type.h"
-#include "constant-string.h"
-#include "constant-utf-8-info.h"
-#include "method.h"
+#include "jvm/class.h"
 
 #include <cassert>
-#include <cstdint>
 #include <cstring>
 #include <ostream>
 #include <utility>
-#include "utils.h"
+
+#include "jvm/constant.h"
+#include "jvm/constant-class.h"
+#include "jvm/constant-double.h"
+#include "jvm/constant-fieldref.h"
+#include "jvm/constant-float.h"
+#include "jvm/constant-integer.h"
+#include "jvm/constant-interface-methodref.h"
+#include "jvm/constant-long.h"
+#include "jvm/constant-methodref.h"
+#include "jvm/constant-name-and-type.h"
+#include "jvm/constant-string.h"
+#include "jvm/constant-utf-8-info.h"
+#include "jvm/method.h"
+#include "internal/utils.h"
 
 
 using namespace Jvm;

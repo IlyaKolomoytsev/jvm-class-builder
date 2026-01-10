@@ -1,8 +1,8 @@
-#include "constant-name-and-type.h"
+#include "jvm/constant-name-and-type.h"
 
-#include <assert.h>
-#include <ostream>
-#include "utils.h"
+#include <cassert>
+
+#include "internal/utils.h"
 
 namespace Jvm
 {

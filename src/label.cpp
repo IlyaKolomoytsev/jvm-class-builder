@@ -1,4 +1,4 @@
-#include "label.h"
+#include "jvm/label.h"
 
 #include <cassert>
 

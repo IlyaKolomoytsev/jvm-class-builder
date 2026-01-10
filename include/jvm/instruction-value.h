@@ -4,8 +4,8 @@
 #include <concepts>
 #include <tuple>
 
-#include "instruction.h"
-#include "utils.h"
+#include "../../src/instruction.h"
+#include "../../src/internal/utils.h"
 
 namespace Jvm
 {

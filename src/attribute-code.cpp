@@ -1,20 +1,19 @@
-#include "attribute-code.h"
+#include "jvm/attribute-code.h"
 
 #include <cassert>
 #include <stdexcept>
-#include <bits/valarray_after.h>
 
-#include "constant-double.h"
-#include "constant-fieldref.h"
-#include "constant-methodref.h"
-#include "constant-interface-methodref.h"
-#include "constant-float.h"
-#include "constant-integer.h"
-#include "constant-long.h"
-#include "instruction-ldc.h"
-#include "instruction-value.h"
-#include "instruction-with-constant.h"
-#include "method.h"
+#include "jvm/constant-double.h"
+#include "jvm/constant-fieldref.h"
+#include "jvm/constant-methodref.h"
+#include "jvm/constant-interface-methodref.h"
+#include "jvm/constant-float.h"
+#include "jvm/constant-integer.h"
+#include "jvm/constant-long.h"
+#include "jvm/instruction-ldc.h"
+#include "jvm/instruction-value.h"
+#include "jvm/instruction-with-constant.h"
+#include "jvm/method.h"
 
 
 using namespace Jvm;
