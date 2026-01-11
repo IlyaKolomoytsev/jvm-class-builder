@@ -61,16 +61,7 @@ AttributeCode* Method::getCodeAttribute()
     return codeAttribute_;
 }
 
-Method::Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor)
-{
-    Class* nameOwner = name->getOwner();
-    Class* descriptorOwner = descriptor->getOwner();
-    assert(nameOwner == descriptorOwner);
-    classOwner_ = nameOwner;
-}
-
-
-void Method::toBinary(std::ostream& os) const
+void Method::writeTo(std::ostream& os) const
 {
     // u2             access_flags;
     uint16_t accessFlags = 0x0000;
@@ -93,14 +84,26 @@ void Method::toBinary(std::ostream& os) const
     os.write(reinterpret_cast<const char*>(&attributeCount), sizeof(attributeCount));
 
     // attribute_info attributes[attributes_count];
-    for (auto attribute : attributes_)
+    for (auto* attribute : attributes_)
     {
-        os << attribute;
+        os << *attribute;
     }
 }
 
-std::ostream& jvm::operator<<(std::ostream& os, const Method& method)
+std::size_t Method::getByteSize() const
 {
-    method.toBinary(os);
-    return os;
+    size_t size = sizeof(AccessFlag) + sizeof(uint16_t) + sizeof(uint16_t) + sizeof(uint16_t);
+    for (auto* attribute : attributes_)
+    {
+        size += attribute->getByteSize();
+    }
+    return size;
 }
+
+Method::Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor) : ClassFileElement(name->getOwner())
+{
+    Class* nameOwner = name->getOwner();
+    Class* descriptorOwner = descriptor->getOwner();
+    assert(nameOwner == descriptorOwner);
+}
+

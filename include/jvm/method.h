@@ -6,13 +6,9 @@
 
 namespace jvm
 {
-    class Attribute;
-
-    class Method
+    class Method final : public ClassFileElement<Class>
     {
-        friend class Class;
-        friend std::ostream& operator<<(std::ostream& os, const Method& method);
-
+        friend Class;
     public:
         enum AccessFlag
         {
@@ -90,6 +86,11 @@ namespace jvm
          */
         AttributeCode* getCodeAttribute();
 
+    protected:
+        void writeTo(std::ostream& os) const override;
+
+        [[nodiscard]] std::size_t getByteSize() const override;
+
     private:
         /**
          * @brief Constructs a method with the specified name and descriptor.
@@ -106,12 +107,6 @@ namespace jvm
          */
         Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor);
 
-        /**For creation this class use
-         * Write object to binary stream.
-         * @param os Output stream.
-         */
-        virtual void toBinary(std::ostream& os) const;
-
         std::set<AccessFlag> accessFlags_{}; ///< Access flags.
         ConstantUtf8Info* name_ = nullptr; ///< String constant with method name.
         ConstantUtf8Info* descriptor_ = nullptr; ///< String constant with method descriptor.
@@ -119,8 +114,6 @@ namespace jvm
         AttributeCode* codeAttribute_ = nullptr; ///< Pointer to code attribute.
         Class* classOwner_ = nullptr;
     };
-
-    std::ostream& operator<<(std::ostream& os, const Method& method);
 } // jvm
 
 #endif //JVM__METHOD_H
