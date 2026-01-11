@@ -3424,7 +3424,7 @@ namespace jvm
         // ToDo operations with code's attributes are not implemented
         // endregion
         // region OVERLOADS
-        [[nodiscard]] bool isMethodAttribute() const override;
+        [[nodiscard]] bool isMethodAttribute() const noexcept override;
 
         /**
          * @pre The attribute must be finalized via @ref finalize.

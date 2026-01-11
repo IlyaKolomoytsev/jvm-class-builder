@@ -6,36 +6,6 @@
 
 using namespace jvm;
 
-ConstantUtf8Info* Attribute::getName() const
-{
-    return name_;
-}
-
-bool Attribute::isClassAttribute() const
-{
-    return false;
-}
-
-bool Attribute::isFieldAttribute() const
-{
-    return false;
-}
-
-bool Attribute::isMethodAttribute() const
-{
-    return false;
-}
-
-bool Attribute::isRecordComponentAttribute() const
-{
-    return false;
-}
-
-bool Attribute::isCodeAttribute() const
-{
-    return false;
-}
-
 void Attribute::toBinary(std::ostream& os) const
 {
     // u2 attribute_name_index;

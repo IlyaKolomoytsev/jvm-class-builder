@@ -1161,7 +1161,7 @@ ExceptionHandler* AttributeCode::addTryCatch(Label* tryStartLabel, Label* tryFin
     return handler;
 }
 
-bool AttributeCode::isMethodAttribute() const
+bool AttributeCode::isMethodAttribute() const noexcept
 {
     return true;
 }

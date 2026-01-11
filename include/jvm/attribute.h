@@ -16,37 +16,37 @@ namespace jvm
         /**
          * @return Attribute name constant.
          */
-        [[nodiscard]] ConstantUtf8Info* getName() const;
+        [[nodiscard]] ConstantUtf8Info* getName() const noexcept { return name_; }
 
         /**
          * Is it class @{jvm::Class} attribute.
          * @return Is class attribute.
          */
-        [[nodiscard]] virtual bool isClassAttribute() const;
+        [[nodiscard]] virtual bool isClassAttribute() const noexcept { return false; }
 
         /**
          * Is it field @{jvm::Field} attribute.
          * @return Is field attribute.
          */
-        [[nodiscard]] virtual bool isFieldAttribute() const;
+        [[nodiscard]] virtual bool isFieldAttribute() const noexcept { return false; }
 
         /**
          * Is it method @{jvm::Method} attribute.
          * @return Is method attribute.
          */
-        [[nodiscard]] virtual bool isMethodAttribute() const;
+        [[nodiscard]] virtual bool isMethodAttribute() const noexcept { return false; }
 
         /**
          * Is it record component attribute.
          * @return Is record component attribute.
          */
-        [[nodiscard]] virtual bool isRecordComponentAttribute() const;
+        [[nodiscard]] virtual bool isRecordComponentAttribute() const noexcept { return false; }
 
         /**
          * Is it code attribute.
          * @return Is code attribute.
          */
-        [[nodiscard]] virtual bool isCodeAttribute() const;
+        [[nodiscard]] virtual bool isCodeAttribute() const noexcept { return false; }
 
         /**
          * Length of attribute in bytes.
