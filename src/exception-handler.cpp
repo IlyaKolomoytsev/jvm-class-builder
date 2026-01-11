@@ -31,12 +31,7 @@ ConstantClass* ExceptionHandler::getCatchClass() const
     return catchClass_;
 }
 
-AttributeCode* ExceptionHandler::getAttributeCodeOwner() const
-{
-    return owner_;
-}
-
-void ExceptionHandler::toBinary(std::ostream& os) const
+void ExceptionHandler::writeTo(std::ostream& os) const
 {
     // Labels must be bound to instructions.
     Instruction* startInstruction = tryStartLabel_->getInstruction();
@@ -64,10 +59,15 @@ void ExceptionHandler::toBinary(std::ostream& os) const
         catch_type = catchClass_->getIndex();
     }
 
-    internal::Utils::writeBigEndian(os, static_cast<uint16_t>(start_pc));
-    internal::Utils::writeBigEndian(os, static_cast<uint16_t>(end_pc));
-    internal::Utils::writeBigEndian(os, static_cast<uint16_t>(handler_pc));
-    internal::Utils::writeBigEndian(os, static_cast<uint16_t>(catch_type));
+    internal::Utils::writeBigEndian(os, start_pc);
+    internal::Utils::writeBigEndian(os, end_pc);
+    internal::Utils::writeBigEndian(os, handler_pc);
+    internal::Utils::writeBigEndian(os, catch_type);
+}
+
+std::size_t ExceptionHandler::getByteSize() const
+{
+    return sizeInBytes;
 }
 
 ExceptionHandler::ExceptionHandler(Label* tryStartLabel,
@@ -75,20 +75,13 @@ ExceptionHandler::ExceptionHandler(Label* tryStartLabel,
                                    Label* catchStartLabel,
                                    ConstantClass* catchClass,
                                    AttributeCode* owner)
-    : tryStartLabel_(tryStartLabel),
+    : ClassFileElement(owner),
+      tryStartLabel_(tryStartLabel),
       tryFinishLabel_(tryFinishLabel),
       catchStartLabel_(catchStartLabel),
-      catchClass_(catchClass),
-      owner_(owner)
+      catchClass_(catchClass)
 {
-    assert(owner_ != nullptr);
     assert(tryStartLabel_ != nullptr);
     assert(tryFinishLabel_ != nullptr);
     assert(catchStartLabel_ != nullptr);
-}
-
-std::ostream& operator<<(std::ostream& os, const ExceptionHandler& handler)
-{
-    handler.toBinary(os);
-    return os;
 }

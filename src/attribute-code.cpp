@@ -1288,7 +1288,7 @@ void AttributeCode::finalize()
     }
 
     // calculate size of all exceptions handlers
-    exceptionsHandlersByteSize_ = ExceptionHandler::getByteSize() * exceptionHandlers_.size();
+    exceptionsHandlersByteSize_ = ExceptionHandler::sizeInBytes * exceptionHandlers_.size();
 
     // check code size
     if (instructionsByteSize_ > UINT16_MAX)

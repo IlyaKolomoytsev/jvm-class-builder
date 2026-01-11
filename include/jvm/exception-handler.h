@@ -4,6 +4,8 @@
 #include <cstdint>
 #include <iosfwd>
 
+#include "class-file-element.h"
+
 namespace jvm
 {
     class AttributeCode;
@@ -25,11 +27,13 @@ namespace jvm
      *
      * If @c catchClass is @c nullptr, the handler is catch-all and @c catch_type is encoded as 0.
      */
-    class ExceptionHandler final
+    class ExceptionHandler final : public ClassFileElement<AttributeCode>
     {
         friend class AttributeCode;
 
     public:
+        static constexpr size_t sizeInBytes = 8;
+
         /**
          * @brief Get the start label of the protected region.
          */
@@ -50,23 +54,14 @@ namespace jvm
          */
         [[nodiscard]] ConstantClass* getCatchClass() const;
 
+    protected:
         /**
-         * @brief Get the owning code attribute.
-         */
-        [[nodiscard]] AttributeCode* getAttributeCodeOwner() const;
-
-        /**
-         * @brief Size of one exception_table entry in bytes.
-         */
-        [[nodiscard]] static constexpr uint8_t getByteSize() { return 8; }
-
-        /**
-         * @brief Serialize this exception_table entry to a binary stream.
-         *
          * @throws std::logic_error If any required label is not bound to an instruction
          *                          or if instruction positions are not finalized.
          */
-        void toBinary(std::ostream& os) const;
+        void writeTo(std::ostream& os) const override;
+
+        [[nodiscard]] std::size_t getByteSize() const override;
 
     private:
         /**
@@ -84,19 +79,11 @@ namespace jvm
                          ConstantClass* catchClass,
                          AttributeCode* owner);
 
-        ~ExceptionHandler() = default;
-
         Label* tryStartLabel_;
         Label* tryFinishLabel_;
         Label* catchStartLabel_;
         ConstantClass* catchClass_; // nullptr => catch-all
-        AttributeCode* owner_;
     };
-
-    /**
-     * @brief Stream helper for serializing exception handlers.
-     */
-    std::ostream& operator<<(std::ostream& os, const ExceptionHandler& handler);
 } // namespace jvm
 
 #endif // JVM__EXCEPTION_HANDLER_H
