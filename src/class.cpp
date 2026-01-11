@@ -18,6 +18,7 @@
 #include "jvm/constant-string.h"
 #include "jvm/constant-utf-8-info.h"
 #include "jvm/descriptor.h"
+#include "jvm/field.h"
 #include "jvm/method.h"
 #include "jvm/internal/utils.h"
 
@@ -249,7 +250,8 @@ ConstantFloat* Class::getOrCreateFloatConstant(float value)
         {
             // Use static method because only one tag can be associated with only one class type.
             auto* floatConstant = static_cast<ConstantFloat*>(constant);
-            if (std::memcmp(&floatConstant->value_, &value, sizeof(float)) == 0)
+            auto valueFromConstant = floatConstant->getValue();
+            if (std::memcmp(&valueFromConstant, &value, sizeof(float)) == 0)
             {
                 return floatConstant;
             }
@@ -271,7 +273,7 @@ ConstantLong* Class::getOrCreateLongConstant(int64_t value)
         {
             // Use static method because only one tag can be associated with only one class type.
             auto* longConstant = static_cast<ConstantLong*>(constant);
-            if (longConstant->value_ == value)
+            if (longConstant->getValue() == value)
             {
                 return longConstant;
             }
@@ -293,7 +295,8 @@ ConstantDouble* Class::getOrCreateDoubleConstant(double value)
         {
             // Use static method because only one tag can be associated with only one class type.
             auto* doubleConstant = static_cast<ConstantDouble*>(constant);
-            if (std::memcmp(&doubleConstant->value_, &value, sizeof(double)) == 0)
+            auto valueFromConstant = doubleConstant->getValue();
+            if (std::memcmp(&valueFromConstant, &value, sizeof(double)) == 0)
             {
                 return doubleConstant;
             }
@@ -422,20 +425,12 @@ Method* Class::getOrCreateMethod(ConstantUtf8Info* name, ConstantUtf8Info* descr
     return method;
 }
 
-void Class::addNewConstant(Constant* constant)
-{
-    constants_.push_back(constant);
-    constant->setIndex(nextCpIndex);
-
-    nextCpIndex += constant->getOccupiedSlots();
-}
-
 std::span<Constant*> Class::constants()
 {
     return constants_;
 }
 
-void Class::toBinary(std::ostream& os) const
+void Class::writeTo(std::ostream& os) const
 {
     // u4             magic;
     static uint32_t magicNumber = 0xCAFEBABE;
@@ -513,4 +508,64 @@ void Class::toBinary(std::ostream& os) const
     {
         os << attribute;
     }
+}
+
+std::size_t Class::getByteSize() const
+{
+    size_t size = 0;
+
+    // u4 magic;
+    size += 4;
+    // u2 minor_version;
+    size += 2;
+    // u2 major_version;
+    size += 2;
+    // u2 constant_pool_count;
+    size += 2;
+    // cp_info constant_pool[constant_pool_count-1];
+    for (const auto& constant : constants_)
+    {
+        size += constant->getByteSize();
+    }
+    // u2 access_flags;
+    size += 2;
+    // u2 this_class;
+    size += 2;
+    // u2 super_class;
+    size += 2;
+    // u2 interfaces_count;
+    size += 2;
+    // u2 interfaces[interfaces_count];
+    size += 2;
+    // u2 fields_count;
+    size += 2;
+    // field_info fields[fields_count];
+    for (auto* field : fields_)
+    {
+        size += field->getByteSize();
+    }
+    // u2 methods_count;
+    size += 2;
+    // method_info methods[methods_count];
+    for (auto* method : methods_)
+    {
+        size += method->getByteSize();
+    }
+    // u2 attributes_count;
+    size += 2;
+    // attribute_info attributes[attributes_count];
+    for (auto* attribute : attributes_)
+    {
+        size += attribute->getByteSize();
+    }
+
+    return size;
+}
+
+void Class::addNewConstant(Constant* constant)
+{
+    constants_.push_back(constant);
+    constant->setIndex(nextCpIndex);
+
+    nextCpIndex += constant->getOccupiedSlots();
 }

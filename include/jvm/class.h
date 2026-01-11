@@ -7,6 +7,8 @@
 #include <string>
 #include <vector>
 
+#include "class-file-element.h"
+
 namespace jvm
 {
     class ConstantDouble;
@@ -47,7 +49,7 @@ namespace jvm
         MAJOR_VERSION_16 = 60,
     };
 
-    class Class
+    class Class : ClassFileElement<void>
     {
         static uint16_t minorVersion;
         static MajorVersion majorVersion;
@@ -383,6 +385,10 @@ namespace jvm
 
         std::span<Constant*> constants();
 
+        void writeTo(std::ostream& os) const override;
+
+        [[nodiscard]] std::size_t getByteSize() const override;
+
     private:
         /**
          * @brief Add a constant to the constant pool.
@@ -390,8 +396,6 @@ namespace jvm
          * @param constant New constant.
          */
         void addNewConstant(Constant* constant);
-
-        void toBinary(std::ostream& os) const;
 
         std::vector<Constant*> constants_{};
         uint16_t nextCpIndex = 1; // 0 index is not available for writing
