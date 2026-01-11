@@ -4,43 +4,25 @@
 
 using namespace jvm;
 
-DescriptorMethod DescriptorMethod::of(std::vector<DescriptorField> params, std::optional<DescriptorField> ret)
+DescriptorMethod::DescriptorMethod(const std::optional<DescriptorField>& returnType,
+    std::initializer_list<DescriptorField> parameters): returnType_(returnType), parameters_(parameters)
 {
-    for (const auto& p : params)
-    {
-        if (p.getPrimitiveFieldType() == PrimitiveFieldType::UNKNOWN)
-        {
-            throw std::logic_error(
-                "Parameter has UNKNOWN type"
-            );
-        }
-    }
-
-    if (ret && ret->getPrimitiveFieldType() == PrimitiveFieldType::UNKNOWN)
-    {
-        throw std::logic_error(
-            "Return type has UNKNOWN type"
-        );
-    }
-
-    return {std::move(params), std::move(ret)};
 }
 
 std::string DescriptorMethod::toString() const
 {
     std::string result;
-    result.push_back('(');
 
-    for (const auto& param : params_)
+    result.push_back('(');
+    for (const auto& param : parameters_)
     {
         result += param.toString();
     }
-
     result.push_back(')');
 
-    if (ret_)
+    if (returnType_)
     {
-        result += ret_->toString();
+        result += returnType_->toString();
     }
     else
     {

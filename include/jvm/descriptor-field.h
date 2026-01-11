@@ -1,124 +1,72 @@
 #ifndef JVM__DESCRIPTOR_FIELD_H
 #define JVM__DESCRIPTOR_FIELD_H
 
+#include <cassert>
 #include <utility>
 
 #include "descriptor.h"
 
 namespace jvm
 {
-    class DescriptorField: public Descriptor
+    /**
+     * @brief JVM field type descriptor.
+     *
+     * Represents a JVM field descriptor, including:
+     * - primitive types,
+     * - reference types,
+     * - array types with arbitrary depth.
+     */
+    class DescriptorField : public Descriptor
     {
     public:
         /**
-         * @brief Creates a descriptor for a primitive (non-array) field type.
+         * @brief Construct a primitive field descriptor.
          *
-         * Examples:
-         * - int        -> "I"
-         * - boolean   -> "Z"
-         *
-         * @param primitiveFieldType Primitive JVM field type.
-         * @return DescriptorField representing the primitive field type.
+         * @param primitiveFieldType Primitive JVM type.
+         * @param arrayDepth Number of array dimensions.
          */
-        static DescriptorField primitive(PrimitiveFieldType primitiveFieldType);
+        DescriptorField(Type primitiveFieldType, uint8_t arrayDepth = 0);
 
         /**
-         * @brief Creates a descriptor for an array of primitive field type.
+         * @brief Construct a reference field descriptor.
          *
-         * Examples:
-         * - int[]      -> "[I"
-         * - double[][]-> "[[D"
-         *
-         * @param primitiveFieldType Primitive JVM field type.
-         * @param arrayDepth Number of array dimensions (must be >= 1).
-         * @return DescriptorField representing the primitive array field type.
+         * @param classReference Fully qualified JVM class name (e.g. "java/lang/String").
+         * @param arrayDepth Number of array dimensions.
          */
-        static DescriptorField primitiveArray(PrimitiveFieldType primitiveFieldType, uint8_t arrayDepth);
+        DescriptorField(std::string classReference, uint8_t arrayDepth = 0);
 
         /**
-         * @brief Creates a descriptor for an object (reference) field type.
-         *
-         * The class name must be provided in JVM internal form
-         * (e.g. "java/lang/String").
-         *
-         * Example:
-         * - String -> "Ljava/lang/String;"
-         *
-         * @param classReference JVM internal class name.
-         * @return DescriptorField representing the object field type.
+         * @return Field base type.
          */
-        static DescriptorField object(std::string classReference);
+        [[nodiscard]] Type getType() const { return primitiveFieldType_; }
 
         /**
-         * @brief Creates a descriptor for an array of object (reference) field type.
+         * @return Number of array dimensions.
+         */
+        [[nodiscard]] uint8_t getArrayDepth() const { return arrayDepth_; }
+
+        /**
+         * @return True if this descriptor represents a reference type.
+         */
+        [[nodiscard]] bool isReferenceType() const { return getType() == Type::Reference; }
+
+        /**
+         * @return JVM class reference name (valid only for reference types).
+         */
+        [[nodiscard]] std::string getClassReference() const { return classReference_; }
+
+        /**
+         * @brief Convert field descriptor to JVM string form.
          *
-         * The class name must be provided in JVM internal form
-         * (e.g. "java/lang/String").
-         *
-         * Examples:
-         * - String[]    -> "[Ljava/lang/String;"
-         * - String[][] -> "[[Ljava/lang/String;"
-         *
-         * @param classReference JVM internal class name.
-         * @param arrayDepth Number of array dimensions (must be >= 1).
-         * @return DescriptorField representing the object array field type.
-         */
-        static DescriptorField objectArray(std::string classReference, uint8_t arrayDepth);
-
-        /**
-         * @return primitive field type
-         */
-        [[nodiscard]] PrimitiveFieldType getPrimitiveFieldType() const;
-
-        /**
-         * @return array depth
-         */
-        [[nodiscard]] uint8_t getArrayDepth() const;
-
-        /**
-         * @return class reference
-         */
-        [[nodiscard]] std::string getClassReference() const;
-
-        /**
-         * @return JVM field descriptor string (e.g. "I", "[[D")
+         * @return JVM field descriptor string.
          */
         [[nodiscard]] std::string toString() const override;
 
     private:
-        explicit DescriptorField(PrimitiveFieldType primitiveFieldType)
-        {
-            fieldType_.primitiveFieldType_ = primitiveFieldType;
-        }
-
-        explicit DescriptorField(PrimitiveFieldType primitiveFieldType, uint8_t arrayDepth)
-        {
-            fieldType_ = {
-                .primitiveFieldType_ = primitiveFieldType,
-                .arrayDepth_ = arrayDepth,
-            };
-            fieldType_.classReference_.clear();
-        }
-
-        explicit DescriptorField(std::string classReference)
-        {
-            fieldType_ = {
-                .primitiveFieldType_ = PrimitiveFieldType::UNKNOWN,
-                .arrayDepth_ = 0,
-                .classReference_ = std::move(classReference)
-            };
-        }
-
-        explicit DescriptorField(std::string classReference, uint8_t arrayDepth)
-        {
-            fieldType_ = {
-                .primitiveFieldType_ = PrimitiveFieldType::UNKNOWN,
-                .arrayDepth_ = arrayDepth,
-                .classReference_ = std::move(classReference)
-            };
-        }
-
+        Type primitiveFieldType_;
+        uint8_t arrayDepth_;
+        std::string classReference_;
     };
-}
+} //jvm
 
 #endif //JVM__DESCRIPTOR_FIELD_H

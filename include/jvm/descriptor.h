@@ -6,72 +6,44 @@
 
 namespace jvm
 {
+    /**
+     * @brief Base interface for JVM descriptors.
+     *
+     * Represents a JVM type descriptor as defined in the Java Virtual Machine Specification.
+     * A descriptor provides a textual JVM encoding of a type or a method signature.
+     */
     class Descriptor
     {
     public:
         /**
-         * Destructor.
+         * @brief Virtual destructor.
          */
         virtual ~Descriptor() = default;
 
         /**
-         * Primitive field types.
+         * @brief JVM primitive and reference type tags.
+         *
+         * Values correspond directly to JVM descriptor characters.
          */
-        enum class PrimitiveFieldType
+        enum Type : char
         {
-            BYTE,
-            CHAR,
-            DOUBLE,
-            FLOAT,
-            INT,
-            LONG,
-            SHORT,
-            BOOLEAN,
-            UNKNOWN
+            Byte = 'B',
+            Char = 'C',
+            Double = 'D',
+            Float = 'F',
+            Int = 'I',
+            Long = 'J',
+            Short = 'S',
+            Boolean = 'Z',
+            Reference = 'L'
         };
 
         /**
-         * @return descriptor by string
+         * @brief Convert descriptor to its JVM string representation.
+         *
+         * @return JVM descriptor string.
          */
-        [[nodiscard]] virtual std::string toString() const;
-
-    protected:
-
-        /**
-        * struct of field type.
-        */
-        struct FieldType
-        {
-            PrimitiveFieldType primitiveFieldType_;
-            uint8_t arrayDepth_; // only for arrays
-            std::string classReference_; // only for class references
-        };
-
-        /**
-         * @param primitiveType  primitive field type.
-         * @return primitive field type by char.
-         */
-        static constexpr char primitiveTypeToChar(PrimitiveFieldType primitiveType)
-        {
-            switch (primitiveType)
-            {
-                case PrimitiveFieldType::BYTE: return 'B';
-                case PrimitiveFieldType::CHAR: return 'C';
-                case PrimitiveFieldType::DOUBLE: return 'D';
-                case PrimitiveFieldType::FLOAT: return 'F';
-                case PrimitiveFieldType::INT: return 'I';
-                case PrimitiveFieldType::LONG: return 'J';
-                case PrimitiveFieldType::SHORT: return 'S';
-                case PrimitiveFieldType::BOOLEAN: return 'Z';
-                case PrimitiveFieldType::UNKNOWN: return '_';
-                default: return '?';
-            }
-        }
-
-        static void isValidPrimitiveFieldType(PrimitiveFieldType primitiveFieldType);
-        static void isEmptyClassReference(const std::string& classReference);
-
-        FieldType fieldType_ = {PrimitiveFieldType::UNKNOWN, 0, ""};
+        [[nodiscard]] virtual std::string toString() const = 0;
     };
 }
 

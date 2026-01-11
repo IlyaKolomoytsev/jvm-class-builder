@@ -35,7 +35,6 @@ add_library(jvm-class-builder
         src/label.cpp
         src/exception-handler.cpp
         src/internal/utils.cpp
-        src/descriptor.cpp
         src/descriptor-field.cpp
         src/descriptor-method.cpp
 )
