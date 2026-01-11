@@ -9,12 +9,7 @@ Instruction* Label::getInstruction() const
     return instruction_;
 }
 
-AttributeCode* Label::getAttributeCodeOwner() const
-{
-    return attributeCodeOwner_;
-}
-
-Label::Label(AttributeCode* codeAttributeOwner) : attributeCodeOwner_(codeAttributeOwner)
+Label::Label(AttributeCode* codeAttributeOwner) : OwnerAware(codeAttributeOwner)
 {
     assert(codeAttributeOwner != nullptr);
 }

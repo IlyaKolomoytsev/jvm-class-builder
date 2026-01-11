@@ -19,7 +19,7 @@ namespace jvm
      *
      * @note A label belongs to a single @ref AttributeCode instance and must not be used with another owner.
      */
-    class Label
+    class Label : public OwnerAware<AttributeCode>
     {
         friend class AttributeCode;
 
@@ -37,13 +37,6 @@ namespace jvm
          * @return @c true if the label refers to an instruction; otherwise @c false.
          */
         [[nodiscard]] bool isInitialized() const;
-
-        /**
-         * @brief Get the owning code attribute.
-         *
-         * @return The @ref AttributeCode instance that created and owns this label.
-         */
-        [[nodiscard]] AttributeCode* getAttributeCodeOwner() const;
 
     private:
         /**
@@ -65,7 +58,6 @@ namespace jvm
         void setInstruction(Instruction* instruction);
 
         Instruction* instruction_ = nullptr; ///< Instruction indicated by the label, or @c nullptr if unbound.
-        AttributeCode* attributeCodeOwner_; ///< Owning code attribute.
     };
 } // jvm
 

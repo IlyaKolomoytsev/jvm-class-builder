@@ -1141,7 +1141,7 @@ AttributeCode& AttributeCode::addLabel(Label* label)
         throw std::logic_error("Attribute code has already finished. New instructions cannot be added.");
     }
 
-    assert(label->getAttributeCodeOwner() == this);
+    assert(label->getOwner() == this);
 
     if (label->getInstruction() != nullptr)
     {
