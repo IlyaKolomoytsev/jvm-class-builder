@@ -10,6 +10,7 @@
 #include "jvm/constant-float.h"
 #include "jvm/constant-integer.h"
 #include "jvm/constant-long.h"
+#include "jvm/constant-string.h"
 #include "jvm/instruction-ldc.h"
 #include "jvm/instruction-value.h"
 #include "jvm/instruction-with-constant.h"
@@ -139,6 +140,11 @@ Instruction* AttributeCode::PushDouble(double value)
     }
     auto* doubleConstant = getOwner()->getOwner()->getOrCreateDoubleConstant(value);
     return new InstructionLdc(this, doubleConstant);
+}
+
+Instruction* AttributeCode::PushString(ConstantString* str)
+{
+    return new InstructionLdc(this, str);
 }
 
 Instruction* AttributeCode::LoadInt(uint16_t index)

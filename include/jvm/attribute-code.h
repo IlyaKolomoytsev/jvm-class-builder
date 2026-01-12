@@ -203,6 +203,36 @@ namespace jvm
         [[nodiscard]] Instruction* PushDouble(double value);
 
         /**
+         * @brief Push a {@code java.lang.String} reference onto the operand stack.
+         *
+         * Pushes a string constant from the constant pool onto the operand stack.
+         * The string value must be represented by a {@ref ConstantString} entry.
+         *
+         * Before:
+         * @code
+         * ...
+         * @endcode
+         *
+         * After:
+         * @code
+         * ..., value (reference to String)
+         * @endcode <br>
+         *
+         * Uses {@ref INSTRUCTION_ldc} or {@ref INSTRUCTION_ldc_w} depending on
+         * the constant pool index size.
+         *
+         * The {@ref ConstantString} must belong to the same class constant pool
+         * as this code attribute.
+         *
+         * @param str String constant to push.
+         * @return A new instruction for this code attribute.
+         *
+         * @note The returned instruction is owned by the caller until it is
+         * registered using {@ref addInstruction}.
+         */
+        [[nodiscard]] Instruction* PushString(ConstantString* str);
+
+        /**
          * @brief Loads an @b integer value from the local variable array at the given index
          *        and pushes it onto the operand stack.
          * @note In the JVM local variable array, long values occupy two consecutive slots; index refers to the first slot.
