@@ -474,6 +474,16 @@ std::span<Constant*> Class::constants()
     return constants_;
 }
 
+void Class::addFlag(AccessFlag flag)
+{
+    accessFlags_.insert(flag);
+}
+
+void Class::removeFlag(AccessFlag flag)
+{
+    accessFlags_.erase(flag);
+}
+
 void Class::writeTo(std::ostream& os) const
 {
     // u4             magic;
@@ -604,6 +614,11 @@ std::size_t Class::getByteSize() const
     }
 
     return size;
+}
+
+const std::set<Class::AccessFlag>* Class::getAccessFlags() const
+{
+    return &accessFlags_;
 }
 
 void Class::addNewConstant(Constant* constant)

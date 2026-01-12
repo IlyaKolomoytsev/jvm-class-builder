@@ -58,7 +58,7 @@ namespace jvm
         static MajorVersion majorVersion;
 
     public:
-        enum AccessFlags
+        enum AccessFlag
         {
             ACC_PUBLIC = 0x0001, // Declared public; may be accessed from outside its package.
             ACC_FINAL = 0x0010, // Declared final; no subclasses allowed.
@@ -449,7 +449,24 @@ namespace jvm
 
         std::span<Constant*> constants();
 
+        /**
+         * Add access flag to class.
+         * @param flag Access flag.
+         */
+        void addFlag(AccessFlag flag);
+
+        /**
+         * Remove access flag from class.
+         * @param flag Access flag.
+         */
+        void removeFlag(AccessFlag flag);
+
         void writeTo(std::ostream& os) const override;
+
+        /**
+         * @return Access flags set.
+         */
+        [[nodiscard]] const std::set<AccessFlag>* getAccessFlags() const;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -463,7 +480,7 @@ namespace jvm
 
         std::vector<Constant*> constants_{};
         uint16_t nextCpIndex = 1; // 0 index is not available for writing
-        std::set<AccessFlags> accessFlags_{};
+        std::set<AccessFlag> accessFlags_{};
         Constant* thisClassConstant_ = nullptr;
         Constant* superClassConstant_ = nullptr;
         std::set<Constant*> interfacesConstant_{};
