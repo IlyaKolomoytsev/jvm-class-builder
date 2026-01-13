@@ -9,6 +9,37 @@ project(jvm-class-builder
 option(BUILD_SHARED_LIBS "Build libraries as shared" OFF)
 option(BUILD_EXAMPLES "Build examples" OFF)
 
+find_program(MAVEN_EXECUTABLE mvn REQUIRED)
+
+set(JAVA_INTERNAL_PROJECT_DIR
+        ${CMAKE_SOURCE_DIR}/java-internal
+)
+set(JAVA_INTERNAL_BUILD_DIR
+        ${CMAKE_BINARY_DIR}/java
+)
+set(JAVA_INTERNAL_JAR
+        ${JAVA_INTERNAL_BUILD_DIR}/fix_code_attribute.jar
+)
+add_custom_command(
+        OUTPUT ${JAVA_INTERNAL_JAR}
+        COMMAND ${MAVEN_EXECUTABLE}
+        -q
+        -DskipTests
+        clean package
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+        ${JAVA_INTERNAL_BUILD_DIR}
+        COMMAND ${CMAKE_COMMAND} -E copy
+        ${JAVA_INTERNAL_PROJECT_DIR}/target/fix_code_attribute.jar
+        ${JAVA_INTERNAL_JAR}
+        WORKING_DIRECTORY ${JAVA_INTERNAL_PROJECT_DIR}
+        COMMENT "Building internal Java helper (Maven)"
+)
+
+# new target for build java
+add_custom_target(java-internal ALL
+        DEPENDS ${JAVA_INTERNAL_JAR}
+)
+
 add_library(jvm-class-builder
         include/jvm/serializable.h
         include/jvm/owner-aware.h
@@ -55,6 +86,9 @@ target_include_directories(jvm-class-builder
 )
 
 add_library(jvm::ClassBuilder ALIAS jvm-class-builder)
+
+# add dependence to main project
+add_dependencies(jvm-class-builder java-internal)
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
