@@ -52,6 +52,13 @@ of the *Java Virtual Machine Class File Format*.
 #include <fstream>
 #include <jvm/class.h>
 #include <jvm/method.h>
+#include <jvm/serializable.h>
+#include <jvm/instruction-ldc.h>
+
+#include <jvm/constant-fieldref.h>
+#include <jvm/constant-methodref.h>
+#include <jvm/constant-string.h>
+
 #include "jvm/descriptor-method.h"
 
 using namespace jvm;
@@ -64,7 +71,7 @@ int main()
         "main",
         DescriptorMethod{
             std::nullopt,
-            {{"java/lang/String", 1}}
+            {{"java/lang/String", 1}} // String[] args
         }
     );
 
@@ -74,14 +81,21 @@ int main()
     mainMethod->addFlag(Method::ACC_PUBLIC);
     mainMethod->addFlag(Method::ACC_STATIC);
 
-    auto descriptor_field_out = DescriptorField("java/io/PrintStream", 0);
+    // --- constants for System.out.println("Hello, world!") ---
+    // Field: java/lang/System.out : Ljava/io/PrintStream;
+    auto descriptor_field_out = DescriptorField("java/io/PrintStream");
     ConstantFieldref* systemOut = helloWorldClass.getOrCreateFieldrefConstant(
         "java/lang/System",
         "out",
         descriptor_field_out
     );
 
-    auto descriptor_method_println = DescriptorMethod(std::nullopt, {{"java/lang/String", 0}});
+    auto descriptor_method_println = DescriptorMethod(
+        std::nullopt,
+        {{"java/lang/String"}}
+    );
+
+    // Method: java/io/PrintStream.println : (Ljava/lang/String;)V
     ConstantMethodref* println = helloWorldClass.getOrCreateMethodrefConstant(
         "java/io/PrintStream",
         "println",
@@ -91,7 +105,7 @@ int main()
     AttributeCode* code = mainMethod->getCodeAttribute();
     *code
         << code->GetStatic(systemOut)
-        << code->PushString("Hello, world!")
+        << code->PushString("Hello, World!")
         << code->InvokeVirtual(println)
         << code->ReturnVoid();
 
@@ -99,6 +113,7 @@ int main()
     helloWorldClass.writeTo(file);
     file.close();
 }
+
 ```
 
 ---
