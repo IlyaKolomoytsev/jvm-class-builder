@@ -73,11 +73,6 @@ namespace jvm
         [[nodiscard]] const std::set<Attribute*>* getAttributes() const;
 
         /**
-         * @return Class owner.
-         */
-        [[nodiscard]] Class* getClassOwner() const;
-
-        /**
          * @brief Get code attribute object.
          *
          * In first call create @ref AttributeCode for this method.
@@ -112,7 +107,6 @@ namespace jvm
         ConstantUtf8Info* descriptor_ = nullptr; ///< String constant with method descriptor.
         std::set<Attribute*> attributes_{}; ///< Attributes.
         AttributeCode* codeAttribute_ = nullptr; ///< Pointer to code attribute.
-        Class* classOwner_ = nullptr;
     };
 } // jvm
 

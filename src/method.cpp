@@ -46,11 +46,6 @@ const std::set<Attribute*>* Method::getAttributes() const
     return &attributes_;
 }
 
-Class* Method::getClassOwner() const
-{
-    return classOwner_;
-}
-
 AttributeCode* Method::getCodeAttribute()
 {
     if (codeAttribute_ == nullptr)
