@@ -7,6 +7,7 @@ project(jvm-class-builder
 )
 
 option(BUILD_SHARED_LIBS "Build libraries as shared" OFF)
+option(BUILD_EXAMPLES "Build examples" OFF)
 
 add_library(jvm-class-builder
         include/jvm/serializable.h
@@ -93,3 +94,7 @@ install(FILES
         ${CMAKE_CURRENT_BINARY_DIR}/jvm-class-builderConfigVersion.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/jvm-class-builder
 )
+
+if (BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
