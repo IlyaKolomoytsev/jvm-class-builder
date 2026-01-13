@@ -4,6 +4,8 @@
 #include <ostream>
 #include <utility>
 
+#include "jvm/internal/utils.h"
+
 using namespace jvm;
 
 void Method::addFlag(AccessFlag flag)
@@ -64,20 +66,21 @@ void Method::writeTo(std::ostream& os) const
     {
         accessFlags = accessFlags | flag;
     }
-    os.write(reinterpret_cast<const char*>(&accessFlags), sizeof(accessFlags));
+    internal::Utils::writeBigEndian(os, accessFlags);
 
     // u2             name_index;
     uint16_t nameIndex = name_->getIndex();
-    os.write(reinterpret_cast<const char*>(&nameIndex), sizeof(nameIndex));
+    internal::Utils::writeBigEndian(os, nameIndex);
 
     // u2             descriptor_index;
     uint16_t descriptorIndex = descriptor_->getIndex();
-    os.write(reinterpret_cast<const char*>(&descriptorIndex), sizeof(descriptorIndex));
+    internal::Utils::writeBigEndian(os, descriptorIndex);
 
     // u2             attributes_count;
     uint16_t attributeCount = attributes_.size();
-    os.write(reinterpret_cast<const char*>(&attributeCount), sizeof(attributeCount));
+    internal::Utils::writeBigEndian(os, attributeCount);
 
+    if (codeAttribute_ != nullptr) {codeAttribute_->finalize();}
     // attribute_info attributes[attributes_count];
     for (auto* attribute : attributes_)
     {
@@ -101,4 +104,3 @@ Method::Method(ConstantUtf8Info* name, ConstantUtf8Info* descriptor) : ClassFile
     Class* descriptorOwner = descriptor->getOwner();
     assert(nameOwner == descriptorOwner);
 }
-
