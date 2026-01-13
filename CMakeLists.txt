@@ -40,6 +40,12 @@ add_custom_target(java-internal ALL
         DEPENDS ${JAVA_INTERNAL_JAR}
 )
 
+# generate paths for internal java project
+configure_file(
+        cmake/java-internal-paths.h.in.h
+        generated/java-internal-paths.h
+)
+
 add_library(jvm-class-builder
         include/jvm/serializable.h
         include/jvm/owner-aware.h
@@ -83,6 +89,7 @@ target_include_directories(jvm-class-builder
         $<INSTALL_INTERFACE:include>
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src/internal
+        ${CMAKE_BINARY_DIR}/generated
 )
 
 add_library(jvm::ClassBuilder ALIAS jvm-class-builder)
