@@ -20,6 +20,10 @@ namespace jvm::internal
         static void writeBigEndian(std::ostream& os, int64_t val);
         static void writeBigEndian(std::ostream& os, float val);
         static void writeBigEndian(std::ostream& os, double val);
+        static constexpr bool hasFlag(uint16_t allFlags, uint16_t flag)
+        {
+            return (allFlags & flag) != 0;
+        }
     };
 } // jvm
 
