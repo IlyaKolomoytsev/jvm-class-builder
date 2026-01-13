@@ -476,6 +476,13 @@ std::span<Constant*> Class::constants()
 
 void Class::addFlag(AccessFlag flag)
 {
+    uint16_t newFlags = 0;
+    for (auto f : accessFlags_)
+        newFlags |= f;
+
+    newFlags |= flag;
+
+    validateFlags(newFlags);
     accessFlags_.insert(flag);
 }
 
@@ -627,4 +634,79 @@ void Class::addNewConstant(Constant* constant)
     constant->setIndex(nextCpIndex);
 
     nextCpIndex += constant->getOccupiedSlots();
+}
+
+void Class::validateFlags(uint16_t flags)
+{
+        using internal::Utils;
+
+    // Validate public with private/protected
+    // Для class допустим только PUBLIC или package-private
+    // (PRIVATE / PROTECTED не существуют для top-level class)
+    if (Utils::hasFlag(flags, 0x0002 /* private */) ||
+        Utils::hasFlag(flags, 0x0004 /* protected */))
+    {
+        throw std::logic_error("Class cannot be private or protected");
+    }
+
+    // Validate abstract with final
+    if (Utils::hasFlag(flags, ACC_ABSTRACT) &&
+        Utils::hasFlag(flags, ACC_FINAL))
+    {
+        throw std::logic_error("Class cannot be both abstract and final");
+    }
+
+    // Validate interface with abstract and final and enum
+    if (Utils::hasFlag(flags, ACC_INTERFACE))
+    {
+        if (!Utils::hasFlag(flags, ACC_ABSTRACT))
+        {
+            throw std::logic_error("Interface class must be abstract");
+        }
+
+        if (Utils::hasFlag(flags, ACC_FINAL))
+        {
+            throw std::logic_error("Interface cannot be final");
+        }
+
+        if (Utils::hasFlag(flags, ACC_ENUM))
+        {
+            throw std::logic_error("Interface cannot be enum");
+        }
+    }
+
+    // Validate annotation with interface
+    if (Utils::hasFlag(flags, ACC_ANNOTATION))
+    {
+        if (!Utils::hasFlag(flags, ACC_INTERFACE))
+        {
+            throw std::logic_error("Annotation must also be an interface");
+        }
+    }
+
+    // Validate enum with interface and module
+    if (Utils::hasFlag(flags, ACC_ENUM))
+    {
+        if (Utils::hasFlag(flags, ACC_INTERFACE))
+        {
+            throw std::logic_error("Enum cannot be interface");
+        }
+
+        if (Utils::hasFlag(flags, ACC_MODULE))
+        {
+            throw std::logic_error("Enum cannot be module");
+        }
+    }
+
+    // Validate module with synthetic
+    if (Utils::hasFlag(flags, ACC_MODULE))
+    {
+        constexpr uint16_t allowed =
+            ACC_MODULE | ACC_SYNTHETIC;
+
+        if ((flags & ~allowed) != 0)
+        {
+            throw std::logic_error("Module class cannot have class-related flags");
+        }
+    }
 }

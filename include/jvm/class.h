@@ -478,6 +478,31 @@ namespace jvm
          */
         void addNewConstant(Constant* constant);
 
+        /**
+         * @brief Validates JVM class access flags for logical consistency.
+         *
+         * Checks that the combination of class @ref AccessFlag values is valid according to the JVM class file format.
+         * This method does not modify the flags; it only throws an exception if an invalid combination is detected.
+         *
+         * The validation covers (at minimum):
+         * - visibility rules (only @ref ACC_PUBLIC is applicable for top-level classes; no private/protected),
+         * - mutual exclusivity constraints (e.g. abstract vs final),
+         * - interface-related constraints (e.g. interface must also be abstract),
+         * - annotation constraints (annotation implies interface),
+         * - enum constraints,
+         * - module constraints (module class-files may only use a very limited set of flags).
+         *
+         * Typical usage is to call this method right before serializing class access flags into the class file
+         * (e.g. inside @ref writeTo).
+         *
+         * @param flags Bit mask containing class access flags (OR-combination of @ref AccessFlag).
+         *
+         * @throws std::logic_error If an invalid combination of flags is found.
+         *
+         * @note This validation follows the JVM Specification rules for @c ClassFile::access_flags.
+         */
+        static void validateFlags(uint16_t flags);
+
         std::vector<Constant*> constants_{};
         uint16_t nextCpIndex = 1; // 0 index is not available for writing
         std::set<AccessFlag> accessFlags_{};
