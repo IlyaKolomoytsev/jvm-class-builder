@@ -1,7 +1,6 @@
 #include "jvm/constant-double.h"
 
 #include <cstring>
-#include <arpa/inet.h>
 
 #include "jvm/internal/utils.h"
 

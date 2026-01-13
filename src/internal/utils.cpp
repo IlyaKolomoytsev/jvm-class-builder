@@ -1,6 +1,5 @@
 #include "jvm/internal/utils.h"
 #include <ostream>
-#include <arpa/inet.h>
 #include <cstring>
 
 namespace jvm::internal
@@ -12,26 +11,22 @@ namespace jvm::internal
 
     void Utils::writeBigEndian(std::ostream& os, uint16_t val)
     {
-        const uint16_t be = htons(val);
-        os.write(reinterpret_cast<const char*>(&be), sizeof(be));
+        os.put(static_cast<char>((val >> 8) & 0xFF));
+        os.put(static_cast<char>(val & 0xFF));
     }
 
     void Utils::writeBigEndian(std::ostream& os, uint32_t val)
     {
-        const uint32_t be = htonl(val);
-        os.write(reinterpret_cast<const char*>(&be), sizeof(be));
+        os.put(static_cast<char>((val >> 24) & 0xFF));
+        os.put(static_cast<char>((val >> 16) & 0xFF));
+        os.put(static_cast<char>((val >> 8) & 0xFF));
+        os.put(static_cast<char>(val & 0xFF));
     }
 
     void Utils::writeBigEndian(std::ostream& os, uint64_t val)
     {
-        const uint32_t hi = static_cast<uint32_t>(val >> 32);
-        const uint32_t lo = static_cast<uint32_t>(val & 0xFFFFFFFFull);
-
-        const uint32_t hi_be = htonl(hi);
-        const uint32_t lo_be = htonl(lo);
-
-        os.write(reinterpret_cast<const char*>(&hi_be), sizeof(hi_be));
-        os.write(reinterpret_cast<const char*>(&lo_be), sizeof(lo_be));
+        for (int i = 7; i >= 0; --i)
+            os.put(static_cast<char>((val >> (i * 8)) & 0xFF));
     }
 
     void Utils::writeBigEndian(std::ostream& os, int8_t val)
