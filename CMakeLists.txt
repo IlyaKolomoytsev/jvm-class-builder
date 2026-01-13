@@ -51,10 +51,25 @@ message(STATUS "Using JAVA_HOME: ${JAVA_HOME}")
 
 # Set paths for include and libraries based on JAVA_HOME
 set(JAVA_INCLUDE_PATH ${JAVA_HOME}/include)
-set(JAVA_INCLUDE_PATH2 ${JAVA_HOME}/include/linux)
+if(WIN32)
+    set(JAVA_INCLUDE_PATH2 "${JAVA_HOME}/include/win32")
 
-# Check if the Java library exists in the expected location
-set(JAVA_LIBRARIES ${JAVA_HOME}/lib/server/libjvm.so)
+    if(EXISTS "${JAVA_HOME}/lib/server/jvm.lib")
+        set(JAVA_LIBRARIES "${JAVA_HOME}/lib/server/jvm.lib")
+    elseif(EXISTS "${JAVA_HOME}/lib/jvm.lib")
+        set(JAVA_LIBRARIES "${JAVA_HOME}/lib/jvm.lib")
+    elseif(EXISTS "${JAVA_HOME}/lib/server/jvm.dll")
+        set(JAVA_LIBRARIES "${JAVA_HOME}/lib/server/jvm.dll")
+    else()
+        message(FATAL_ERROR "Could not find JVM library under JAVA_HOME='${JAVA_HOME}'. Tried: lib/server/jvm.lib, lib/jvm.lib, lib/server/jvm.dll")
+    endif()
+elseif(APPLE)
+    set(JAVA_INCLUDE_PATH2 ${JAVA_HOME}/include/darwin)
+    set(JAVA_LIBRARIES ${JAVA_HOME}/lib/server/libjvm.so)
+elseif(UNIX)
+    set(JAVA_INCLUDE_PATH2 ${JAVA_HOME}/include/linux)
+    set(JAVA_LIBRARIES ${JAVA_HOME}/lib/server/libjvm.so)
+endif()
 
 # Check if libjvm.so exists and is accessible
 if (NOT EXISTS ${JAVA_LIBRARIES})
