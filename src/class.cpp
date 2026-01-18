@@ -36,6 +36,7 @@ using namespace jvm;
 MajorVersion Class::majorVersion = MAJOR_VERSION_16;
 
 Class::Class(const std::string &className, const std::string &parentName) {
+    name = className;
     thisClassConstant_ = getOrCreateClassConstant(className);
     superClassConstant_ = getOrCreateClassConstant(parentName);
 }
@@ -594,6 +595,10 @@ std::size_t Class::getByteSize() const {
     }
 
     return size;
+}
+
+std::string Class::getClassName() const {
+    return name;
 }
 
 const std::set<Class::AccessFlag> *Class::getAccessFlags() const {

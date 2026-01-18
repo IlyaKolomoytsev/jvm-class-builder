@@ -402,7 +402,6 @@ namespace jvm {
         ConstantUtf8Info *getOrCreateUtf8Constant(const std::string &value);
 
         //endregion
-
         //region GET OR CREATE FIELD
 
         /**
@@ -453,6 +452,7 @@ namespace jvm {
           */
         Field *getOrCreateField(ConstantUtf8Info *nameConstant, ConstantUtf8Info *descriptorConstant);
 
+        //endregion
         //region GET OR CREATE METHOD
 
         /**
@@ -529,6 +529,8 @@ namespace jvm {
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
+        [[nodiscard]] std::string getClassName() const;
+
     private:
         /**
          * @brief Add a constant to the constant pool.
@@ -570,6 +572,7 @@ namespace jvm {
          */
         static void fixClassBinary(std::ostream &os, const std::span<const unsigned char> &data);
 
+        std::string name;
         std::vector<Constant *> constants_{};
         uint16_t nextCpIndex = 1; // 0 index is not available for writing
         std::set<AccessFlag> accessFlags_{};
