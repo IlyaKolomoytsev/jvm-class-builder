@@ -5,8 +5,8 @@
 using namespace jvm;
 
 DescriptorMethod::DescriptorMethod(const std::optional<DescriptorField> &returnType,
-                                   std::initializer_list<DescriptorField> parameters) : returnType_(returnType),
-    parameters_(parameters) {
+                                   std::initializer_list<DescriptorField> parameters)
+    : returnType_(returnType), parameters_(parameters) {
 }
 
 std::string DescriptorMethod::toString() const {
