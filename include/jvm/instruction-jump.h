@@ -4,8 +4,7 @@
 #include "instruction.h"
 #include "label.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Branch instruction that transfers control to a target @ref Label.
      *
@@ -16,8 +15,7 @@ namespace jvm
      *
      * @note Instances are created by @ref AttributeCode.
      */
-    class InstructionJump : public Instruction
-    {
+    class InstructionJump : public Instruction {
         friend class AttributeCode;
 
     public:
@@ -26,7 +24,7 @@ namespace jvm
          *
          * @return Target label.
          */
-        [[nodiscard]] Label* getJumpLabel() const;
+        [[nodiscard]] Label *getJumpLabel() const;
 
     protected:
         /**
@@ -36,16 +34,16 @@ namespace jvm
          * @param command Jump opcode (e.g. @c ifeq, @c goto).
          * @param label Target label to branch to.
          */
-        InstructionJump(AttributeCode* attributeCode, Command command, Label* label);
+        InstructionJump(AttributeCode *attributeCode, Command command, Label *label);
 
         /**
          * @throws std::logic_error If the target label is not bound to any instruction.
          */
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] size_t getByteSize() const override;
 
-        Label* label_; ///< Target label (non-owning).
+        Label *label_; ///< Target label (non-owning).
     };
 } // jvm
 

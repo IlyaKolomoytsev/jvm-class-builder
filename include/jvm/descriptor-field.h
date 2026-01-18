@@ -6,8 +6,7 @@
 
 #include "descriptor.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief JVM field type descriptor.
      *
@@ -16,8 +15,7 @@ namespace jvm
      * - reference types,
      * - array types with arbitrary depth.
      */
-    class DescriptorField : public Descriptor
-    {
+    class DescriptorField : public Descriptor {
     public:
         /**
          * @brief Construct a primitive field descriptor.

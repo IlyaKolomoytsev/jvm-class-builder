@@ -3,8 +3,7 @@
 
 #include <cassert>
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Base class for objects that have an explicit owning object.
      *
@@ -17,27 +16,25 @@ namespace jvm
      *
      * @tparam Owner Type of the owning object.
      */
-    template <class Owner>
-    class OwnerAware
-    {
+    template<class Owner>
+    class OwnerAware {
     public:
         /**
          * @brief Construct an object with the given owner.
          *
          * @param owner Pointer to the owning object.
          */
-        explicit OwnerAware(Owner* owner) : owner_(owner)
-        {
+        explicit OwnerAware(Owner *owner) : owner_(owner) {
             assert(owner != nullptr);
         }
 
         /**
          * @return Pointer to the owning object.
          */
-        [[nodiscard]] Owner* getOwner() const { return owner_; }
+        [[nodiscard]] Owner *getOwner() const { return owner_; }
 
     private:
-        Owner* owner_;
+        Owner *owner_;
     };
 } //jvm
 

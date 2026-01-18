@@ -3,8 +3,7 @@
 
 #include "instruction.h"
 
-namespace jvm
-{
+namespace jvm {
     class AttributeCode;
 
     /**
@@ -19,8 +18,7 @@ namespace jvm
      *
      * @note A label belongs to a single @ref AttributeCode instance and must not be used with another owner.
      */
-    class Label : public OwnerAware<AttributeCode>
-    {
+    class Label : public OwnerAware<AttributeCode> {
         friend class AttributeCode;
 
     public:
@@ -29,7 +27,7 @@ namespace jvm
          *
          * @return The target instruction, or @c nullptr if the label has not been bound yet.
          */
-        [[nodiscard]] Instruction* getInstruction() const;
+        [[nodiscard]] Instruction *getInstruction() const;
 
         /**
          * @brief Check whether this label is already bound to an instruction.
@@ -46,7 +44,7 @@ namespace jvm
          *
          * @param codeAttributeOwner Owning code attribute.
          */
-        Label(AttributeCode* codeAttributeOwner);
+        Label(AttributeCode *codeAttributeOwner);
 
         /**
          * @brief Bind this label to a concrete instruction.
@@ -55,9 +53,9 @@ namespace jvm
          *
          * @param instruction Instruction to bind to.
          */
-        void setInstruction(Instruction* instruction);
+        void setInstruction(Instruction *instruction);
 
-        Instruction* instruction_ = nullptr; ///< Instruction indicated by the label, or @c nullptr if unbound.
+        Instruction *instruction_ = nullptr; ///< Instruction indicated by the label, or @c nullptr if unbound.
     };
 } // jvm
 

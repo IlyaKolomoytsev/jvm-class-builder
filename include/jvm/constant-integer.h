@@ -3,10 +3,8 @@
 
 #include "constant.h"
 
-namespace jvm
-{
-    class ConstantInteger : public Constant
-    {
+namespace jvm {
+    class ConstantInteger : public Constant {
         friend class Class;
 
     public:
@@ -16,7 +14,7 @@ namespace jvm
         [[nodiscard]] int32_t getValue();
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -26,7 +24,7 @@ namespace jvm
          * @param value Integer value.
          * @param classOwner Class owner.
          */
-        ConstantInteger(int32_t value, Class* classOwner);
+        ConstantInteger(int32_t value, Class *classOwner);
 
         int32_t value_; ///< Integer value.
     };

@@ -10,8 +10,7 @@
 #include "instruction-jump.h"
 
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Code attribute.
      *
@@ -42,8 +41,7 @@ namespace jvm
      * *code << L << I;                          // ownership transferred to AttributeCode
      * @endcode
      */
-    class AttributeCode final : public Attribute, public ClassFileElement<Method>
-    {
+    class AttributeCode final : public Attribute, public ClassFileElement<Method> {
         friend class Method;
 
     public:
@@ -59,7 +57,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* Nop();
+        [[nodiscard]] Instruction *Nop();
 
         /**
          * @brief Push \b null onto stack.
@@ -79,7 +77,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PushNull();
+        [[nodiscard]] Instruction *PushNull();
 
         /**
          * @brief Push @b integer value onto stack.
@@ -116,7 +114,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PushInt(int32_t value);
+        [[nodiscard]] Instruction *PushInt(int32_t value);
 
         /**
          * @brief Push @b long value onto stack.
@@ -144,7 +142,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PushLong(int64_t value);
+        [[nodiscard]] Instruction *PushLong(int64_t value);
 
         /**
          * @brief Push @b float value onto stack.
@@ -172,7 +170,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PushFloat(float value);
+        [[nodiscard]] Instruction *PushFloat(float value);
 
         /**
          * @brief Push @b double value onto stack.
@@ -200,7 +198,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PushDouble(double value);
+        [[nodiscard]] Instruction *PushDouble(double value);
 
         /**
          * @brief Push a {@c java.lang.String} reference onto the operand stack.
@@ -225,7 +223,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using {@ref addInstruction}.
          */
-        [[nodiscard]] Instruction* PushString(ConstantString* stringConstant);
+        [[nodiscard]] Instruction *PushString(ConstantString *stringConstant);
 
         /**
          * @brief Push a {@c java.lang.String} reference onto the operand stack.
@@ -249,7 +247,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using {@ref addInstruction}.
          */
-        [[nodiscard]] Instruction* PushString(const std::string& value);
+        [[nodiscard]] Instruction *PushString(const std::string &value);
 
         /**
          * @brief Loads an @b integer value from the local variable array at the given index
@@ -270,7 +268,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadInt(uint16_t index);
+        [[nodiscard]] Instruction *LoadInt(uint16_t index);
 
         /**
          * @brief Loads a @b long value from the local variable array at the given index
@@ -290,7 +288,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadLong(uint16_t index);
+        [[nodiscard]] Instruction *LoadLong(uint16_t index);
 
         /**
          * @brief Loads a @b float value from the local variable array at the given index
@@ -310,7 +308,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadFloat(uint16_t index);
+        [[nodiscard]] Instruction *LoadFloat(uint16_t index);
 
         /**
          * @brief Loads a @b double value from the local variable array at the given index
@@ -331,7 +329,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadDouble(uint16_t index);
+        [[nodiscard]] Instruction *LoadDouble(uint16_t index);
 
         /**
          * @brief Loads a @b reference value from the local variable array at the given index
@@ -351,7 +349,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadReference(uint16_t index);
+        [[nodiscard]] Instruction *LoadReference(uint16_t index);
 
         /**
          * @brief Loads a @b boolean value from an array and pushes it onto the operand stack as an integer.
@@ -371,7 +369,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadBooleanFromArray();
+        [[nodiscard]] Instruction *LoadBooleanFromArray();
 
         /**
          * @brief Loads a @b byte value from an array and pushes it onto the operand stack as an integer.
@@ -391,7 +389,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadByteFromArray();
+        [[nodiscard]] Instruction *LoadByteFromArray();
 
         /**
          * @brief Loads a @b char value from an array and pushes it onto the operand stack as an integer.
@@ -411,7 +409,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadCharFromArray();
+        [[nodiscard]] Instruction *LoadCharFromArray();
 
         /**
          * @brief Loads a @b short value from an array and pushes it onto the operand stack as an integer.
@@ -431,7 +429,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadShortFromArray();
+        [[nodiscard]] Instruction *LoadShortFromArray();
 
         /**
          * @brief Loads an @b integer value from an array and pushes it onto the operand stack.
@@ -451,7 +449,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadIntFromArray();
+        [[nodiscard]] Instruction *LoadIntFromArray();
 
         /**
          * @brief Loads a @b long value from an array and pushes it onto the operand stack.
@@ -472,7 +470,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadLongFromArray();
+        [[nodiscard]] Instruction *LoadLongFromArray();
 
         /**
          * @brief Loads a @b float value from an array and pushes it onto the operand stack.
@@ -492,7 +490,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadFloatFromArray();
+        [[nodiscard]] Instruction *LoadFloatFromArray();
 
         /**
          * @brief Loads a @b double value from an array and pushes it onto the operand stack.
@@ -513,7 +511,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadDoubleFromArray();
+        [[nodiscard]] Instruction *LoadDoubleFromArray();
 
         /**
          * @brief Loads a @b reference value from an array and pushes it onto the operand stack.
@@ -533,7 +531,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LoadReferenceFromArray();
+        [[nodiscard]] Instruction *LoadReferenceFromArray();
 
         /**
          * @brief Pop an @b integer value from the top of the stack and store it in the local variable array at the given index.
@@ -564,7 +562,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreInt(uint16_t index);
+        [[nodiscard]] Instruction *StoreInt(uint16_t index);
 
         /**
          * @brief Pop a @b long value from the top of the stack and store it in the local variable array at the given index.
@@ -597,7 +595,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreLong(uint16_t index);
+        [[nodiscard]] Instruction *StoreLong(uint16_t index);
 
         /**
          * @brief Pop a @b float value from the top of the stack and store it in the local variable array at the given index.
@@ -628,7 +626,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreFloat(uint16_t index);
+        [[nodiscard]] Instruction *StoreFloat(uint16_t index);
 
         /**
          * @brief Pop a @b double value from the top of the stack and store it in the local variable array at the given index.
@@ -661,7 +659,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreDouble(uint16_t index);
+        [[nodiscard]] Instruction *StoreDouble(uint16_t index);
 
         /**
          * @brief Pop a @b reference value from the top of the stack and store it in the local variable array at the given index.
@@ -692,7 +690,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreReference(uint16_t index);
+        [[nodiscard]] Instruction *StoreReference(uint16_t index);
 
         /**
          * @brief Store an @b integer value into an array.
@@ -712,7 +710,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreIntToArray();
+        [[nodiscard]] Instruction *StoreIntToArray();
 
         /**
          * @brief Store a @b long value into an array.
@@ -733,7 +731,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreLongToArray();
+        [[nodiscard]] Instruction *StoreLongToArray();
 
         /**
          * @brief Store a @b float value into an array.
@@ -753,7 +751,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreFloatToArray();
+        [[nodiscard]] Instruction *StoreFloatToArray();
 
         /**
          * @brief Store a @b double value into an array.
@@ -774,7 +772,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreDoubleToArray();
+        [[nodiscard]] Instruction *StoreDoubleToArray();
 
         /**
          * @brief Store a @b reference value into an array.
@@ -794,7 +792,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreReferenceToArray();
+        [[nodiscard]] Instruction *StoreReferenceToArray();
 
         /**
          * @brief Store a @b boolean value into an array.
@@ -814,7 +812,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreBooleanToArray();
+        [[nodiscard]] Instruction *StoreBooleanToArray();
 
         /**
          * @brief Store a @b byte value into an array.
@@ -834,7 +832,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreByteToArray();
+        [[nodiscard]] Instruction *StoreByteToArray();
 
         /**
          * @brief Store a @b char value into an array.
@@ -854,7 +852,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreCharToArray();
+        [[nodiscard]] Instruction *StoreCharToArray();
 
         /**
          * @brief Store a @b short value into an array.
@@ -874,7 +872,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* StoreShortToArray();
+        [[nodiscard]] Instruction *StoreShortToArray();
 
         /**
          * @brief Pop @b one value (category 1) from the top of operand stack.
@@ -894,7 +892,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PopOne();
+        [[nodiscard]] Instruction *PopOne();
 
         /**
          * @brief Pop @b two values (category 2) from the top of operand stack.
@@ -914,7 +912,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PopTwo();
+        [[nodiscard]] Instruction *PopTwo();
 
         /**
          * @brief Duplicate the top operand stack value (one slot value).
@@ -937,7 +935,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* Duplicate();
+        [[nodiscard]] Instruction *Duplicate();
 
         /**
          * @brief Duplicate the top operand stack value (one slot value) and insert it beneath the next value.
@@ -960,7 +958,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DuplicateBeforeOne();
+        [[nodiscard]] Instruction *DuplicateBeforeOne();
 
         /**
          * @brief Duplicate the top operand stack value (one slot value) and insert it two values down.
@@ -983,7 +981,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DuplicateBeforeTwo();
+        [[nodiscard]] Instruction *DuplicateBeforeTwo();
 
         /**
          * @brief Duplicate the top operand stack value (two slot value).
@@ -1007,7 +1005,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DuplicateDouble();
+        [[nodiscard]] Instruction *DuplicateDouble();
 
         /**
          * @brief Duplicate the top operand stack value (two slot value) and insert it beneath the next value.
@@ -1030,7 +1028,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DuplicateDoubleBeforeOne();
+        [[nodiscard]] Instruction *DuplicateDoubleBeforeOne();
 
         /**
          * @brief Duplicate the top operand stack value (two slot value) and insert it two values down.
@@ -1053,7 +1051,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DuplicateDoubleBeforeTwo();
+        [[nodiscard]] Instruction *DuplicateDoubleBeforeTwo();
 
         /**
          * Swap the top two operand stack values.
@@ -1073,7 +1071,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* Swap();
+        [[nodiscard]] Instruction *Swap();
 
         /**
          * @brief Add two integer values on the top of the stack.
@@ -1093,7 +1091,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* AddInt();
+        [[nodiscard]] Instruction *AddInt();
 
         /**
          * @brief Add two long values on the top of the stack.
@@ -1114,7 +1112,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* AddLong();
+        [[nodiscard]] Instruction *AddLong();
 
         /**
          * @brief Add two float values on the top of the stack.
@@ -1134,7 +1132,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* AddFloat();
+        [[nodiscard]] Instruction *AddFloat();
 
         /**
          * @brief Add two double values on the top of the stack.
@@ -1155,7 +1153,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* AddDouble();
+        [[nodiscard]] Instruction *AddDouble();
 
         /**
          * @brief Subtract two integer values on the top of the stack.
@@ -1180,7 +1178,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* SubInt();
+        [[nodiscard]] Instruction *SubInt();
 
         /**
          * @brief Subtract two long values on the top of the stack.
@@ -1206,7 +1204,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* SubLong();
+        [[nodiscard]] Instruction *SubLong();
 
         /**
          * @brief Subtract two float values on the top of the stack.
@@ -1231,7 +1229,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* SubFloat();
+        [[nodiscard]] Instruction *SubFloat();
 
         /**
          * @brief Subtract two double values on the top of the stack.
@@ -1257,7 +1255,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* SubDouble();
+        [[nodiscard]] Instruction *SubDouble();
 
         /**
          * @brief Multiply two integer values on the top of the stack.
@@ -1277,7 +1275,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MulInt();
+        [[nodiscard]] Instruction *MulInt();
 
         /**
          * @brief Multiply two long values on the top of the stack.
@@ -1298,7 +1296,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MulLong();
+        [[nodiscard]] Instruction *MulLong();
 
         /**
          * @brief Multiply two float values on the top of the stack.
@@ -1318,7 +1316,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MulFloat();
+        [[nodiscard]] Instruction *MulFloat();
 
         /**
          * @brief Multiply two double values on the top of the stack.
@@ -1339,7 +1337,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MulDouble();
+        [[nodiscard]] Instruction *MulDouble();
 
         /**
          * @brief Divide two integer values on the top of the stack.
@@ -1364,7 +1362,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DivInt();
+        [[nodiscard]] Instruction *DivInt();
 
         /**
          * @brief Divide two long values on the top of the stack.
@@ -1390,7 +1388,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DivLong();
+        [[nodiscard]] Instruction *DivLong();
 
         /**
          * @brief Divide two float values on the top of the stack.
@@ -1415,7 +1413,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DivFloat();
+        [[nodiscard]] Instruction *DivFloat();
 
         /**
          * @brief Divide two double values on the top of the stack.
@@ -1441,7 +1439,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DivDouble();
+        [[nodiscard]] Instruction *DivDouble();
 
         /**
          * @brief Computes the remainder of two integer values on the top of the stack.
@@ -1468,7 +1466,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RemInt();
+        [[nodiscard]] Instruction *RemInt();
 
         /**
          * @brief Computes the remainder of two long values on the top of the stack.
@@ -1496,7 +1494,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RemLong();
+        [[nodiscard]] Instruction *RemLong();
 
         /**
          * @brief Computes the remainder of two float values on the top of the stack.
@@ -1521,7 +1519,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RemFloat();
+        [[nodiscard]] Instruction *RemFloat();
 
         /**
          * @brief Computes the remainder of two double values on the top of the stack.
@@ -1547,7 +1545,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RemDouble();
+        [[nodiscard]] Instruction *RemDouble();
 
         /**
          * @brief Negate an integer value on the top of the stack.
@@ -1572,7 +1570,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* NegInt();
+        [[nodiscard]] Instruction *NegInt();
 
         /**
          * @brief Negate a long value on the top of the stack.
@@ -1598,7 +1596,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* NegLong();
+        [[nodiscard]] Instruction *NegLong();
 
         /**
          * @brief Negate a float value on the top of the stack.
@@ -1623,7 +1621,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* NegFloat();
+        [[nodiscard]] Instruction *NegFloat();
 
         /**
          * @brief Negate a double value on the top of the stack.
@@ -1649,7 +1647,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* NegDouble();
+        [[nodiscard]] Instruction *NegDouble();
 
         /**
          * @brief Left shift an integer value on the top of the stack.
@@ -1676,7 +1674,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LeftShiftInt();
+        [[nodiscard]] Instruction *LeftShiftInt();
 
         /**
          * @brief Right arithmetic shift an integer value on the top of the stack.
@@ -1703,7 +1701,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RightArithmeticShiftInt();
+        [[nodiscard]] Instruction *RightArithmeticShiftInt();
 
         /**
          * @brief Right logical shift an integer value on the top of the stack.
@@ -1730,7 +1728,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RightLogicShiftInt();
+        [[nodiscard]] Instruction *RightLogicShiftInt();
 
         /**
          * @brief Left shift a long value on the top of the stack.
@@ -1758,7 +1756,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LeftShiftLong();
+        [[nodiscard]] Instruction *LeftShiftLong();
 
         /**
          * @brief Right arithmetic shift a long value on the top of the stack.
@@ -1786,7 +1784,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RightArithmeticShiftLong();
+        [[nodiscard]] Instruction *RightArithmeticShiftLong();
 
         /**
          * @brief Right logical shift a long value on the top of the stack.
@@ -1814,7 +1812,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* RightLogicShiftLong();
+        [[nodiscard]] Instruction *RightLogicShiftLong();
 
         /**
          * @brief Bitwise AND two integer values on the top of the stack.
@@ -1839,7 +1837,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* BitwiseAndInt();
+        [[nodiscard]] Instruction *BitwiseAndInt();
 
         /**
          * @brief Bitwise AND two long values on the top of the stack.
@@ -1865,7 +1863,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* BitwiseAndLong();
+        [[nodiscard]] Instruction *BitwiseAndLong();
 
         /**
          * @brief Bitwise OR two integer values on the top of the stack.
@@ -1890,7 +1888,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* BitwiseOrInt();
+        [[nodiscard]] Instruction *BitwiseOrInt();
 
         /**
          * @brief Bitwise OR two long values on the top of the stack.
@@ -1916,7 +1914,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* BitwiseOrLong();
+        [[nodiscard]] Instruction *BitwiseOrLong();
 
         /**
          * @brief Bitwise XOR two integer values on the top of the stack.
@@ -1941,7 +1939,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* BitwiseXorInt();
+        [[nodiscard]] Instruction *BitwiseXorInt();
 
         /**
          * @brief Bitwise XOR two long values on the top of the stack.
@@ -1967,7 +1965,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* BitwiseXorLong();
+        [[nodiscard]] Instruction *BitwiseXorLong();
 
         /**
          * @brief Increment a local integer variable by value.
@@ -1988,7 +1986,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IncrementLocalVariable(uint16_t index, int16_t value);
+        [[nodiscard]] Instruction *IncrementLocalVariable(uint16_t index, int16_t value);
 
         /**
          * @brief Convert an integer value on the top of the stack to a long value.
@@ -2009,7 +2007,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IntToLong();
+        [[nodiscard]] Instruction *IntToLong();
 
         /**
          * @brief Convert an integer value on the top of the stack to a float value.
@@ -2029,7 +2027,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IntToFloat();
+        [[nodiscard]] Instruction *IntToFloat();
 
         /**
          * @brief Convert an integer value on the top of the stack to a double value.
@@ -2050,7 +2048,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IntToDouble();
+        [[nodiscard]] Instruction *IntToDouble();
 
         /**
          * @brief Convert a long value on the top of the stack to an integer value.
@@ -2071,7 +2069,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LongToInt();
+        [[nodiscard]] Instruction *LongToInt();
 
         /**
          * @brief Convert a long value on the top of the stack to a float value.
@@ -2092,7 +2090,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LongToFloat();
+        [[nodiscard]] Instruction *LongToFloat();
 
         /**
         * @brief Convert a long value on the top of the stack to a double value.
@@ -2114,7 +2112,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* LongToDouble();
+        [[nodiscard]] Instruction *LongToDouble();
 
         /**
          * @brief Convert a float value on the top of the stack to an integer value.
@@ -2134,7 +2132,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* FloatToInt();
+        [[nodiscard]] Instruction *FloatToInt();
 
         /**
          * @brief Convert a float value on the top of the stack to a long value.
@@ -2155,7 +2153,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* FloatToLong();
+        [[nodiscard]] Instruction *FloatToLong();
 
         /**
          * @brief Convert a float value on the top of the stack to a double value.
@@ -2176,7 +2174,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* FloatToDouble();
+        [[nodiscard]] Instruction *FloatToDouble();
 
         /**
          * @brief Convert a double value on the top of the stack to an integer value.
@@ -2197,7 +2195,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DoubleToInt();
+        [[nodiscard]] Instruction *DoubleToInt();
 
         /**
          * @brief Convert a double value on the top of the stack to a long value.
@@ -2219,7 +2217,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DoubleToLong();
+        [[nodiscard]] Instruction *DoubleToLong();
 
         /**
          * @brief Convert a double value on the top of the stack to a float value.
@@ -2240,7 +2238,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* DoubleToFloat();
+        [[nodiscard]] Instruction *DoubleToFloat();
 
         /**
          * @brief Convert an integer value on the top of the stack to a byte value.
@@ -2260,7 +2258,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IntToByte();
+        [[nodiscard]] Instruction *IntToByte();
 
         /**
          * @brief Convert an integer value on the top of the stack to a char value.
@@ -2280,7 +2278,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IntToChar();
+        [[nodiscard]] Instruction *IntToChar();
 
         /**
          * @brief Convert an integer value on the top of the stack to a short value.
@@ -2300,7 +2298,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* IntToShort();
+        [[nodiscard]] Instruction *IntToShort();
 
         /**
          * @brief Compare two long values on the top of the stack.
@@ -2328,7 +2326,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* CompareLong();
+        [[nodiscard]] Instruction *CompareLong();
 
         /**
          * @brief Compare two float values on the top of the stack.
@@ -2366,7 +2364,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* CompareFloat(Instruction::StrictCompare nanResult);
+        [[nodiscard]] Instruction *CompareFloat(Instruction::StrictCompare nanResult);
 
         /**
          * @brief Compare two double values on the top of the stack.
@@ -2405,7 +2403,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* CompareDouble(Instruction::StrictCompare nanResult);
+        [[nodiscard]] Instruction *CompareDouble(Instruction::StrictCompare nanResult);
 
         /**
          * @brief Conditional branch based on comparison of an integer value with zero.
@@ -2439,7 +2437,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* If(Instruction::Compare operation, Label* label);
+        [[nodiscard]] InstructionJump *If(Instruction::Compare operation, Label *label);
 
         /**
          * @brief Conditional branch based on comparison of two integer values.
@@ -2473,7 +2471,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* IfWithCompare(Instruction::Compare operation, Label* label);
+        [[nodiscard]] InstructionJump *IfWithCompare(Instruction::Compare operation, Label *label);
 
         /**
          * @brief Conditional branch if two reference values are equal.
@@ -2498,7 +2496,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* IfReferenceEqual(Label* label);
+        [[nodiscard]] InstructionJump *IfReferenceEqual(Label *label);
 
         /**
          * @brief Conditional branch if two reference values are not equal.
@@ -2523,7 +2521,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* IfReferenceNotEqual(Label* label);
+        [[nodiscard]] InstructionJump *IfReferenceNotEqual(Label *label);
 
 
         /**
@@ -2538,7 +2536,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* GoTo(Label* label);
+        [[nodiscard]] InstructionJump *GoTo(Label *label);
 
 
         /**
@@ -2569,8 +2567,8 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* Switch(int32_t low, int32_t high, Label* defaultLabel,
-                                          const std::vector<Label*>& labels);
+        [[nodiscard]] Instruction *Switch(int32_t low, int32_t high, Label *defaultLabel,
+                                          const std::vector<Label *> &labels);
 
         /**
          * @brief Jump to one of several targets based on an integer key (lookupswitch).
@@ -2596,7 +2594,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* Switch(Label* defaultLabel, const std::map<int32_t, Label*>& labels);
+        [[nodiscard]] Instruction *Switch(Label *defaultLabel, const std::map<int32_t, Label *> &labels);
 
 
         /**
@@ -2619,7 +2617,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnBoolean();
+        [[nodiscard]] Instruction *ReturnBoolean();
 
         /**
          * @brief Return a byte value from a method.
@@ -2641,7 +2639,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnByte();
+        [[nodiscard]] Instruction *ReturnByte();
 
         /**
          * @brief Return a char value from a method.
@@ -2663,7 +2661,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnChar();
+        [[nodiscard]] Instruction *ReturnChar();
 
         /**
          * @brief Return a short value from a method.
@@ -2685,7 +2683,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnShort();
+        [[nodiscard]] Instruction *ReturnShort();
 
         /**
          * @brief Return an integer value from a method.
@@ -2707,7 +2705,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnInt();
+        [[nodiscard]] Instruction *ReturnInt();
 
         /**
          * @brief Return a long value from a method.
@@ -2730,7 +2728,7 @@ namespace jvm
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          * @note Long values occupy two words on the operand stack (category 2).
          */
-        [[nodiscard]] Instruction* ReturnLong();
+        [[nodiscard]] Instruction *ReturnLong();
 
         /**
          * @brief Return a float value from a method.
@@ -2752,7 +2750,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnFloat();
+        [[nodiscard]] Instruction *ReturnFloat();
 
         /**
          * @brief Return a double value from a method.
@@ -2775,7 +2773,7 @@ namespace jvm
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          * @note Double values occupy two words on the operand stack (category 2).
          */
-        [[nodiscard]] Instruction* ReturnDouble();
+        [[nodiscard]] Instruction *ReturnDouble();
 
         /**
          * @brief Return a reference value from a method.
@@ -2797,7 +2795,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnReference();
+        [[nodiscard]] Instruction *ReturnReference();
 
         /**
          * @brief Return void from a method.
@@ -2809,7 +2807,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ReturnVoid();
+        [[nodiscard]] Instruction *ReturnVoid();
 
         /**
          * @brief Get a static field value from a class.
@@ -2832,7 +2830,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* GetStatic(ConstantFieldref* field);
+        [[nodiscard]] Instruction *GetStatic(ConstantFieldref *field);
 
         /**
          * @brief Set a static field value in a class.
@@ -2855,7 +2853,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PutStatic(ConstantFieldref* field);
+        [[nodiscard]] Instruction *PutStatic(ConstantFieldref *field);
 
         /**
          * @brief Get a field value from an object.
@@ -2878,7 +2876,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* GetField(ConstantFieldref* field);
+        [[nodiscard]] Instruction *GetField(ConstantFieldref *field);
 
         /**
          * @brief Set a field value in an object.
@@ -2901,7 +2899,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* PutField(ConstantFieldref* field);
+        [[nodiscard]] Instruction *PutField(ConstantFieldref *field);
 
         /**
          * @brief Invoke an instance method using virtual dispatch.
@@ -2924,7 +2922,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* InvokeVirtual(ConstantMethodref* method);
+        [[nodiscard]] Instruction *InvokeVirtual(ConstantMethodref *method);
 
         /**
          * @brief Invoke an instance method using special handling.
@@ -2948,7 +2946,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* InvokeSpecial(ConstantMethodref* method);
+        [[nodiscard]] Instruction *InvokeSpecial(ConstantMethodref *method);
 
         /**
          * @brief Invoke a static method.
@@ -2971,7 +2969,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* InvokeStatic(ConstantMethodref* method);
+        [[nodiscard]] Instruction *InvokeStatic(ConstantMethodref *method);
 
         /**
          * @brief Invoke an interface method.
@@ -2994,7 +2992,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* InvokeInterface(ConstantInterfaceMethodref* method);
+        [[nodiscard]] Instruction *InvokeInterface(ConstantInterfaceMethodref *method);
 
         // ToDo Introduce InvokeDynamic static constructor.
         // [[nodiscard]] Instruction* InvokeDynamic();
@@ -3020,7 +3018,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* New(ConstantClass* classConstant);
+        [[nodiscard]] Instruction *New(ConstantClass *classConstant);
 
         /**
          * @brief Create a new primitive type array.
@@ -3044,7 +3042,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* NewArray(Instruction::Type type);
+        [[nodiscard]] Instruction *NewArray(Instruction::Type type);
 
         /**
          * @brief Create a new reference type array.
@@ -3068,7 +3066,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* NewArray(ConstantClass* classConstant);
+        [[nodiscard]] Instruction *NewArray(ConstantClass *classConstant);
 
         /**
          * @brief Get the length of an array.
@@ -3090,7 +3088,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* ArrayLength();
+        [[nodiscard]] Instruction *ArrayLength();
 
         /**
          * @brief Throw an exception.
@@ -3112,7 +3110,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* Throw();
+        [[nodiscard]] Instruction *Throw();
 
         /**
          * @brief Check whether an object is of the specified type.
@@ -3136,7 +3134,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* CheckCast(ConstantClass* classConstant);
+        [[nodiscard]] Instruction *CheckCast(ConstantClass *classConstant);
 
         /**
          * @brief Determine whether an object is of the specified type.
@@ -3160,7 +3158,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* InstanceOf(ConstantClass* classConstant);
+        [[nodiscard]] Instruction *InstanceOf(ConstantClass *classConstant);
 
         /**
          * @brief Enter a monitor associated with an object.
@@ -3182,7 +3180,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MonitorEnter();
+        [[nodiscard]] Instruction *MonitorEnter();
 
         /**
          * @brief Exit a monitor associated with an object.
@@ -3204,7 +3202,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MonitorExit();
+        [[nodiscard]] Instruction *MonitorExit();
 
         /**
          * @brief Create a new multidimensional array.
@@ -3229,7 +3227,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] Instruction* MultiNewArray(ConstantClass* classConstant, uint8_t dimensions);
+        [[nodiscard]] Instruction *MultiNewArray(ConstantClass *classConstant, uint8_t dimensions);
 
         /**
          * @brief Conditional branch if a reference value is null.
@@ -3253,7 +3251,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* IfNull(Label* label);
+        [[nodiscard]] InstructionJump *IfNull(Label *label);
 
         /**
          * @brief Conditional branch if a reference value is not null.
@@ -3277,7 +3275,7 @@ namespace jvm
          * @return A new instruction for this code attribute.
          * @note The returned instruction is owned by the caller until it is registered using @ref addInstruction.
          */
-        [[nodiscard]] InstructionJump* IfNotNull(Label* label);
+        [[nodiscard]] InstructionJump *IfNotNull(Label *label);
 
         // endregion
         // region ADD TO CODE
@@ -3287,7 +3285,7 @@ namespace jvm
          * @return This instance.
          * @note Transfers ownership of @p instruction to this @ref AttributeCode instance.
          */
-        AttributeCode& addInstruction(Instruction* instruction);
+        AttributeCode &addInstruction(Instruction *instruction);
 
         /**
          * Add instructions to the end of the @ref code_ "list of instructions".
@@ -3296,13 +3294,12 @@ namespace jvm
          * @return This instance.
          * @see AttributeCode::addInstruction
          */
-        template <class... Ptrs>
-        AttributeCode& addInstructions(Ptrs... instructions)
-        {
-            static_assert(((std::is_convertible_v<Ptrs, Instruction*>) && ...),
+        template<class... Ptrs>
+        AttributeCode &addInstructions(Ptrs... instructions) {
+            static_assert(((std::is_convertible_v<Ptrs, Instruction *>) && ...),
                           "All arguments must be convertible to Instruction*.");
 
-            ((void)addInstruction(static_cast<Instruction*>(instructions)), ...);
+            ((void) addInstruction(static_cast<Instruction *>(instructions)), ...);
             return *this;
         }
 
@@ -3313,27 +3310,24 @@ namespace jvm
          * @return This instance.
          * @see AttributeCode::addInstruction
          */
-        template <std::ranges::input_range R>
-        AttributeCode& addInstructions(R&& r)
-        {
-            using V = std::remove_cvref_t<std::ranges::range_reference_t<R>>;
-            static_assert(std::is_convertible_v<V, Instruction*>,
+        template<std::ranges::input_range R>
+        AttributeCode &addInstructions(R &&r) {
+            using V = std::remove_cvref_t<std::ranges::range_reference_t<R> >;
+            static_assert(std::is_convertible_v<V, Instruction *>,
                           "Range elements must be convertible to Instruction*");
 
-            for (auto&& x : r) addInstruction(static_cast<Instruction*>(x));
+            for (auto &&x: r) addInstruction(static_cast<Instruction *>(x));
             return *this;
         }
 
         /// @copydoc AttributeCode::addInstruction
-        AttributeCode& operator<<(Instruction* instruction)
-        {
+        AttributeCode &operator<<(Instruction *instruction) {
             return addInstruction(instruction);
         }
 
         /// @copydoc AttributeCode::addInstructions(R&&)
-        template <std::ranges::input_range R>
-        AttributeCode& operator<<(R&& r)
-        {
+        template<std::ranges::input_range R>
+        AttributeCode &operator<<(R &&r) {
             return addInstructions(r);
         }
 
@@ -3354,7 +3348,7 @@ namespace jvm
          * @see AttributeCode::addLabel
          * @note The returned label is owned by the caller until it is registered using @ref addLabel.
          */
-        Label* CodeLabel();
+        Label *CodeLabel();
 
 
         // endregion
@@ -3376,12 +3370,11 @@ namespace jvm
          * @return This instance.
          * @note Transfers ownership of @p label to this @ref AttributeCode instance.
          */
-        AttributeCode& addLabel(Label* label);
+        AttributeCode &addLabel(Label *label);
 
 
         /// @copydoc AttributeCode::addLabel
-        AttributeCode& operator<<(Label* label)
-        {
+        AttributeCode &operator<<(Label *label) {
             return addLabel(label);
         }
 
@@ -3423,10 +3416,10 @@ namespace jvm
          * @param catchClass Exception class to catch. If @c nullptr, the handler is catch-all (catches any throwable).
          * @return Created exception handler.
          */
-        ExceptionHandler* addTryCatch(Label* tryStartLabel,
-                                      Label* tryFinishLabel,
-                                      Label* catchStartLabel,
-                                      ConstantClass* catchClass);
+        ExceptionHandler *addTryCatch(Label *tryStartLabel,
+                                      Label *tryFinishLabel,
+                                      Label *catchStartLabel,
+                                      ConstantClass *catchClass);
 
         /**
          * @brief Register a catch-all handler for a protected region.
@@ -3440,10 +3433,9 @@ namespace jvm
          *
          * @see addTryCatch
          */
-        inline ExceptionHandler* addCatchAll(Label* tryStartLabel,
-                                             Label* tryFinishLabel,
-                                             Label* handlerStartLabel)
-        {
+        inline ExceptionHandler *addCatchAll(Label *tryStartLabel,
+                                             Label *tryFinishLabel,
+                                             Label *handlerStartLabel) {
             return addTryCatch(tryStartLabel, tryFinishLabel, handlerStartLabel, nullptr);
         }
 
@@ -3465,6 +3457,7 @@ namespace jvm
          * @note Safe to call multiple times; subsequent calls have no effect.
          */
         void finalize();
+
         // endregion
         // region ATTRIBUTES
         // ToDo operations with code's attributes are not implemented
@@ -3477,7 +3470,7 @@ namespace jvm
          * @pre The attribute must be finalized via @ref finalize.
          * @throws std::logic_error If called before finalization.
          */
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         /**
          * @pre The attribute must be finalized via @ref finalize.
@@ -3491,7 +3484,7 @@ namespace jvm
          *
          * @param methodOwner Owning method for this сode attribute.
          */
-        explicit AttributeCode(Method* methodOwner);
+        explicit AttributeCode(Method *methodOwner);
 
     public:
         [[nodiscard]] std::size_t getByteSize() const override;
@@ -3502,14 +3495,14 @@ namespace jvm
         uint16_t instructionsByteSize_ = 0; ///< Size of bytecode instruction array measured in bytes.
         /// Size of exceptions handlers set measured in bytes (exception_table structure).
         uint16_t exceptionsHandlersByteSize_ = 0;
-        std::vector<Instruction*> code_{}; ///< Bytecode instructions array.
-        std::set<ExceptionHandler*> exceptionHandlers_{}; ///< Exception handlers set.
-        std::set<Attribute*> attributes_{}; ///< Attributes.
+        std::vector<Instruction *> code_{}; ///< Bytecode instructions array.
+        std::set<ExceptionHandler *> exceptionHandlers_{}; ///< Exception handlers set.
+        std::set<Attribute *> attributes_{}; ///< Attributes.
 
-        std::set<Label*> labelsOnCurrentStep_{}; ///< Set of labels on current step.
+        std::set<Label *> labelsOnCurrentStep_{}; ///< Set of labels on current step.
 
         bool isFinalized_ = false; ///< Flag of completed attribute initialization.
-        std::set<Label*> allRegisteredLabels_; ///< Registered labels
+        std::set<Label *> allRegisteredLabels_; ///< Registered labels
     };
 } // jvm
 

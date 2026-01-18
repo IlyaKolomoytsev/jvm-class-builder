@@ -5,25 +5,23 @@
 #include "constant-name-and-type.h"
 #include "constant.h"
 
-namespace jvm
-{
-    class ConstantFieldref final : public Constant
-    {
+namespace jvm {
+    class ConstantFieldref final : public Constant {
         friend class Class;
 
     public:
         /**
          * @return Class constant.
          */
-        [[nodiscard]] ConstantClass* getClass() const;
+        [[nodiscard]] ConstantClass *getClass() const;
 
         /**
          * @return Field name and type constant.
          */
-        [[nodiscard]] ConstantNameAndType* getNameAndType() const;
+        [[nodiscard]] ConstantNameAndType *getNameAndType() const;
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -33,10 +31,10 @@ namespace jvm
          * @param classConstant Class constant.
          * @param nameAndTypeConstant Field name and type constant.
          */
-        ConstantFieldref(ConstantClass* classConstant, ConstantNameAndType* nameAndTypeConstant);
+        ConstantFieldref(ConstantClass *classConstant, ConstantNameAndType *nameAndTypeConstant);
 
-        ConstantClass* class_; ///< Class constant.
-        ConstantNameAndType* nameAndType_; ///< Field name and type constant.
+        ConstantClass *class_; ///< Class constant.
+        ConstantNameAndType *nameAndType_; ///< Field name and type constant.
     };
 } //jvm
 

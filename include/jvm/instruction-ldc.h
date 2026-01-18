@@ -3,8 +3,7 @@
 
 #include "instruction-with-constant.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Instruction "ldc*". Load a constant from the constant pool onto the operand stack.
      *
@@ -35,8 +34,7 @@ namespace jvm
      * @note Instances are created by @ref AttributeCode. The instruction assumes that the referenced
      *       constant has (or will have) a valid constant pool index by the time the code is serialized.
      */
-    class InstructionLdc final : public InstructionWithConstant
-    {
+    class InstructionLdc final : public InstructionWithConstant {
         friend class AttributeCode;
 
     private:
@@ -51,7 +49,7 @@ namespace jvm
          *
          * @throws std::invalid_argument If the constant tag is not supported by ldc* instructions.
          */
-        InstructionLdc(AttributeCode* attributeCode, Constant* constant);
+        InstructionLdc(AttributeCode *attributeCode, Constant *constant);
 
         /**
          * @brief Select an initial opcode based on the constant tag.
@@ -65,7 +63,7 @@ namespace jvm
          *
          * @throws std::invalid_argument If the constant tag is not supported by ldc* instructions.
          */
-        [[nodiscard]] static Command selectInstruction(Constant* constant);
+        [[nodiscard]] static Command selectInstruction(Constant *constant);
 
     protected:
         /**

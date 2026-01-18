@@ -4,23 +4,21 @@
 #include "constant-utf-8-info.h"
 #include "constant.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * String constant.
      */
-    class ConstantString : public Constant
-    {
+    class ConstantString : public Constant {
         friend class Class;
 
     public:
         /**
          * @return UTF-8 string constant.
          */
-        [[nodiscard]] ConstantUtf8Info* getString();
+        [[nodiscard]] ConstantUtf8Info *getString();
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -29,9 +27,9 @@ namespace jvm
          * Create string constant.
          * @param utf8StringConstant UTF-8 string constant.
          */
-        ConstantString(ConstantUtf8Info* utf8StringConstant);
+        ConstantString(ConstantUtf8Info *utf8StringConstant);
 
-        ConstantUtf8Info* string_; ///< UTF-8 string constant.
+        ConstantUtf8Info *string_; ///< UTF-8 string constant.
     };
 } // jvm
 

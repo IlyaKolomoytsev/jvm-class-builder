@@ -3,10 +3,8 @@
 
 #include "constant.h"
 
-namespace jvm
-{
-    class ConstantFloat : public Constant
-    {
+namespace jvm {
+    class ConstantFloat : public Constant {
         friend class Class;
 
     public:
@@ -16,7 +14,7 @@ namespace jvm
         [[nodiscard]] float getValue() const;
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -26,7 +24,7 @@ namespace jvm
          * @param value Float value.
          * @param classOwner Class owner.
          */
-        ConstantFloat(float value, Class* classOwner);
+        ConstantFloat(float value, Class *classOwner);
 
         float value_; ///< Float value.
     };

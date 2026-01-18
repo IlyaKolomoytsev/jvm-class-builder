@@ -4,29 +4,27 @@
 #include "constant-utf-8-info.h"
 #include "constant.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * Name and type constant.
      * Contains information about name and descriptor.
      */
-    class ConstantNameAndType : public Constant
-    {
+    class ConstantNameAndType : public Constant {
         friend class Class;
 
     public:
         /**
          * @return UTF-8 constant with name.
          */
-        [[nodiscard]] ConstantUtf8Info* getName() const;
+        [[nodiscard]] ConstantUtf8Info *getName() const;
 
         /**
          * @return UTF-8 constant with descriptor.
          */
-        [[nodiscard]] ConstantUtf8Info* getDescriptor() const;
+        [[nodiscard]] ConstantUtf8Info *getDescriptor() const;
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -36,10 +34,10 @@ namespace jvm
          * @param name UTF-8 constant with name.
          * @param descriptor UTF-8 constant with descriptor.
          */
-        ConstantNameAndType(ConstantUtf8Info* name, ConstantUtf8Info* descriptor);
+        ConstantNameAndType(ConstantUtf8Info *name, ConstantUtf8Info *descriptor);
 
-        ConstantUtf8Info* name_; ///< UTF-8 constant with name.
-        ConstantUtf8Info* descriptor_; ///< UTF-8 constant with descriptor.
+        ConstantUtf8Info *name_; ///< UTF-8 constant with name.
+        ConstantUtf8Info *descriptor_; ///< UTF-8 constant with descriptor.
     };
 } // jvm
 

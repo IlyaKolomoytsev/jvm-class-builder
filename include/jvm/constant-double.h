@@ -3,10 +3,8 @@
 
 #include "constant.h"
 
-namespace jvm
-{
-    class ConstantDouble : public Constant
-    {
+namespace jvm {
+    class ConstantDouble : public Constant {
         friend class Class;
 
     public:
@@ -21,7 +19,7 @@ namespace jvm
         [[nodiscard]] uint16_t getOccupiedSlots() const override;
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -31,7 +29,7 @@ namespace jvm
          * @param value Double value.
          * @param classOwner Class owner.
          */
-        ConstantDouble(double value, Class* classOwner);
+        ConstantDouble(double value, Class *classOwner);
 
         double value_; ///< Double value.
     };

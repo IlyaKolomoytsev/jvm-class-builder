@@ -4,28 +4,23 @@
 
 using namespace jvm;
 
-DescriptorMethod::DescriptorMethod(const std::optional<DescriptorField>& returnType,
-    std::initializer_list<DescriptorField> parameters): returnType_(returnType), parameters_(parameters)
-{
+DescriptorMethod::DescriptorMethod(const std::optional<DescriptorField> &returnType,
+                                   std::initializer_list<DescriptorField> parameters) : returnType_(returnType),
+    parameters_(parameters) {
 }
 
-std::string DescriptorMethod::toString() const
-{
+std::string DescriptorMethod::toString() const {
     std::string result;
 
     result.push_back('(');
-    for (const auto& param : parameters_)
-    {
+    for (const auto &param: parameters_) {
         result += param.toString();
     }
     result.push_back(')');
 
-    if (returnType_)
-    {
+    if (returnType_) {
         result += returnType_->toString();
-    }
-    else
-    {
+    } else {
         result.push_back('V');
     }
 

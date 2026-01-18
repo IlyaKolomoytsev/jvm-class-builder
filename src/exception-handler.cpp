@@ -11,40 +11,33 @@
 
 using namespace jvm;
 
-Label* ExceptionHandler::getTryStartLabel() const
-{
+Label *ExceptionHandler::getTryStartLabel() const {
     return tryStartLabel_;
 }
 
-Label* ExceptionHandler::getTryFinishLabel() const
-{
+Label *ExceptionHandler::getTryFinishLabel() const {
     return tryFinishLabel_;
 }
 
-Label* ExceptionHandler::getCatchStartLabel() const
-{
+Label *ExceptionHandler::getCatchStartLabel() const {
     return catchStartLabel_;
 }
 
-ConstantClass* ExceptionHandler::getCatchClass() const
-{
+ConstantClass *ExceptionHandler::getCatchClass() const {
     return catchClass_;
 }
 
-void ExceptionHandler::writeTo(std::ostream& os) const
-{
+void ExceptionHandler::writeTo(std::ostream &os) const {
     // Labels must be bound to instructions.
-    Instruction* startInstruction = tryStartLabel_->getInstruction();
-    Instruction* endInstruction = tryFinishLabel_->getInstruction();
-    Instruction* handlerInstruction = catchStartLabel_->getInstruction();
+    Instruction *startInstruction = tryStartLabel_->getInstruction();
+    Instruction *endInstruction = tryFinishLabel_->getInstruction();
+    Instruction *handlerInstruction = catchStartLabel_->getInstruction();
 
-    if (!startInstruction || !endInstruction || !handlerInstruction)
-    {
+    if (!startInstruction || !endInstruction || !handlerInstruction) {
         throw std::logic_error("ExceptionHandler labels must be bound to instructions before serialization.");
     }
 
-    if (!startInstruction->isIndexSet() || !endInstruction->isIndexSet() || !handlerInstruction->isIndexSet())
-    {
+    if (!startInstruction->isIndexSet() || !endInstruction->isIndexSet() || !handlerInstruction->isIndexSet()) {
         throw std::logic_error("ExceptionHandler label instructions must have their index set before serialization.");
     }
 
@@ -54,8 +47,7 @@ void ExceptionHandler::writeTo(std::ostream& os) const
 
     // catch_type: 0 => catch-all, otherwise constant pool index of CONSTANT_Class
     uint16_t catch_type = 0;
-    if (catchClass_ != nullptr)
-    {
+    if (catchClass_ != nullptr) {
         catch_type = catchClass_->getIndex();
     }
 
@@ -65,22 +57,20 @@ void ExceptionHandler::writeTo(std::ostream& os) const
     internal::Utils::writeBigEndian(os, catch_type);
 }
 
-std::size_t ExceptionHandler::getByteSize() const
-{
+std::size_t ExceptionHandler::getByteSize() const {
     return sizeInBytes;
 }
 
-ExceptionHandler::ExceptionHandler(Label* tryStartLabel,
-                                   Label* tryFinishLabel,
-                                   Label* catchStartLabel,
-                                   ConstantClass* catchClass,
-                                   AttributeCode* owner)
+ExceptionHandler::ExceptionHandler(Label *tryStartLabel,
+                                   Label *tryFinishLabel,
+                                   Label *catchStartLabel,
+                                   ConstantClass *catchClass,
+                                   AttributeCode *owner)
     : ClassFileElement(owner),
       tryStartLabel_(tryStartLabel),
       tryFinishLabel_(tryFinishLabel),
       catchStartLabel_(catchStartLabel),
-      catchClass_(catchClass)
-{
+      catchClass_(catchClass) {
     assert(tryStartLabel_ != nullptr);
     assert(tryFinishLabel_ != nullptr);
     assert(catchStartLabel_ != nullptr);

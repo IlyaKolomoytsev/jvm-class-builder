@@ -7,8 +7,7 @@
 #include "descriptor.h"
 #include "descriptor-field.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief JVM method descriptor.
      *
@@ -16,8 +15,7 @@ namespace jvm
      * - zero or more parameter field descriptors,
      * - an optional return type (absence means void).
      */
-    class DescriptorMethod : public Descriptor
-    {
+    class DescriptorMethod : public Descriptor {
     public:
         /**
          * @brief Construct a method descriptor from parameters range.
@@ -25,11 +23,14 @@ namespace jvm
          * @param returnType Optional return type (@c std::nullopt means void).
          * @param parameters Range of parameter descriptors.
          */
-        template <std::ranges::input_range R>
-            requires std::same_as<std::ranges::range_value_t<R>, DescriptorField>
-        DescriptorMethod(const std::optional<DescriptorField>& returnType, R&& parameters)
-            : returnType_(returnType), parameters_(std::ranges::begin(parameters), std::ranges::end(parameters))
-        {
+        template<std::ranges::input_range R>
+            requires std::same_as < std::ranges::range_value_t < R >
+
+        ,
+        DescriptorField
+        >
+        DescriptorMethod(const std::optional<DescriptorField> &returnType, R &&parameters)
+            : returnType_(returnType), parameters_(std::ranges::begin(parameters), std::ranges::end(parameters)) {
         }
 
         /**
@@ -38,7 +39,7 @@ namespace jvm
          * @param returnType Optional return type (@c std::nullopt means void).
          * @param parameters Parameter descriptors.
          */
-        DescriptorMethod(const std::optional<DescriptorField>& returnType,
+        DescriptorMethod(const std::optional<DescriptorField> &returnType,
                          std::initializer_list<DescriptorField> parameters);
 
         /**
@@ -51,12 +52,12 @@ namespace jvm
         /**
          * @return Method parameter descriptors.
          */
-        [[nodiscard]] const std::vector<DescriptorField>& getParameters() const { return parameters_; }
+        [[nodiscard]] const std::vector<DescriptorField> &getParameters() const { return parameters_; }
 
         /**
          * @return Method return type descriptor, or std::nullopt for void.
          */
-        [[nodiscard]] const std::optional<DescriptorField>& getReturn() const { return returnType_; }
+        [[nodiscard]] const std::optional<DescriptorField> &getReturn() const { return returnType_; }
 
     private:
         std::optional<DescriptorField> returnType_;

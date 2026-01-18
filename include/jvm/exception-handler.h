@@ -6,8 +6,7 @@
 
 #include "class-file-element.h"
 
-namespace jvm
-{
+namespace jvm {
     class AttributeCode;
     class ConstantClass;
     class Label;
@@ -27,8 +26,7 @@ namespace jvm
      *
      * If @c catchClass is @c nullptr, the handler is catch-all and @c catch_type is encoded as 0.
      */
-    class ExceptionHandler final : public ClassFileElement<AttributeCode>
-    {
+    class ExceptionHandler final : public ClassFileElement<AttributeCode> {
         friend class AttributeCode;
 
     public:
@@ -37,29 +35,29 @@ namespace jvm
         /**
          * @brief Get the start label of the protected region.
          */
-        [[nodiscard]] Label* getTryStartLabel() const;
+        [[nodiscard]] Label *getTryStartLabel() const;
 
         /**
          * @brief Get the end label of the protected region (end-exclusive).
          */
-        [[nodiscard]] Label* getTryFinishLabel() const;
+        [[nodiscard]] Label *getTryFinishLabel() const;
 
         /**
          * @brief Get the label of the handler entry point.
          */
-        [[nodiscard]] Label* getCatchStartLabel() const;
+        [[nodiscard]] Label *getCatchStartLabel() const;
 
         /**
          * @brief Get the caught exception class or @c nullptr for catch-all.
          */
-        [[nodiscard]] ConstantClass* getCatchClass() const;
+        [[nodiscard]] ConstantClass *getCatchClass() const;
 
     protected:
         /**
          * @throws std::logic_error If any required label is not bound to an instruction
          *                          or if instruction positions are not finalized.
          */
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -73,16 +71,16 @@ namespace jvm
          * @param catchClass Exception class to catch, or @c nullptr for catch-all.
          * @param owner Owning code attribute.
          */
-        ExceptionHandler(Label* tryStartLabel,
-                         Label* tryFinishLabel,
-                         Label* catchStartLabel,
-                         ConstantClass* catchClass,
-                         AttributeCode* owner);
+        ExceptionHandler(Label *tryStartLabel,
+                         Label *tryFinishLabel,
+                         Label *catchStartLabel,
+                         ConstantClass *catchClass,
+                         AttributeCode *owner);
 
-        Label* tryStartLabel_;
-        Label* tryFinishLabel_;
-        Label* catchStartLabel_;
-        ConstantClass* catchClass_; // nullptr => catch-all
+        Label *tryStartLabel_;
+        Label *tryFinishLabel_;
+        Label *catchStartLabel_;
+        ConstantClass *catchClass_; // nullptr => catch-all
     };
 } // namespace jvm
 
