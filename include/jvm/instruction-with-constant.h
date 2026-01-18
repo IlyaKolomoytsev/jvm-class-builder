@@ -4,15 +4,13 @@
 #include "constant.h"
 #include "instruction.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Bytecode instruction that references an entry in the constant pool.
      *
      * @note Instances are created and configured by @ref AttributeCode.
      */
-    class InstructionWithConstant : public Instruction
-    {
+    class InstructionWithConstant : public Instruction {
         friend class AttributeCode;
 
     public:
@@ -21,14 +19,13 @@ namespace jvm
          *
          * @return Referenced constant pool entry.
          */
-        [[nodiscard]] Constant* getConstant() const;
+        [[nodiscard]] Constant *getConstant() const;
 
     protected:
         /**
          * @brief Supported operand sizes for encoding a constant pool index.
          */
-        enum AvailableReferenceSize : uint8_t
-        {
+        enum AvailableReferenceSize : uint8_t {
             OneByte = 1, ///< Encode constant pool index as one byte.
             TwoByte = 2, ///< Encode constant pool index as two bytes.
         };
@@ -41,9 +38,9 @@ namespace jvm
          * @param constant Referenced constant pool entry.
          * @param size Operand size used to encode the constant pool index.
          */
-        InstructionWithConstant(AttributeCode* attributeCode,
+        InstructionWithConstant(AttributeCode *attributeCode,
                                 Command command,
-                                Constant* constant,
+                                Constant *constant,
                                 AvailableReferenceSize size);
 
         /**
@@ -62,12 +59,12 @@ namespace jvm
         /**
          * @throws std::out_of_range If the reference size is 1 byte and the constant index does not fit.
          */
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
     private:
-        Constant* constant_; ///< Referenced constant pool entry.
+        Constant *constant_; ///< Referenced constant pool entry.
         AvailableReferenceSize size_; ///< Operand size used to encode the constant pool index.
     };
 } // jvm

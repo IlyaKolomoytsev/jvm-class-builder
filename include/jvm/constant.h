@@ -6,20 +6,18 @@
 #include "class-file-element.h"
 #include "class.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * Base class of constant.
      */
-    class Constant : public ClassFileElement<Class>
-    {
+    class Constant : public ClassFileElement<Class> {
         friend class Class;
+
     public:
         /**
          * Constant values tag.
          */
-        enum Tag:uint8_t
-        {
+        enum Tag:uint8_t {
             CONSTANT_Class = 7,
             CONSTANT_Fieldref = 9,
             CONSTANT_Methodref = 10,
@@ -61,9 +59,9 @@ namespace jvm
          * @param tag Tag of constant.
          * @param classOwner Constant owner class.
          */
-        explicit Constant(Tag tag, Class* classOwner);
+        explicit Constant(Tag tag, Class *classOwner);
 
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override { return 1; };
 

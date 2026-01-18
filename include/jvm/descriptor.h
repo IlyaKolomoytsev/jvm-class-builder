@@ -4,11 +4,10 @@
 #include <cstdint>
 #include <string>
 
-namespace jvm
-{
+namespace jvm {
     class Descriptor;
 
-    template <class T>
+    template<class T>
     concept DescriptorType = std::same_as<T, Descriptor> || std::derived_from<T, Descriptor>;
 
     /**
@@ -17,8 +16,7 @@ namespace jvm
      * Represents a JVM type descriptor as defined in the Java Virtual Machine Specification.
      * A descriptor provides a textual JVM encoding of a type or a method signature.
      */
-    class Descriptor
-    {
+    class Descriptor {
     public:
         /**
          * @brief Virtual destructor.
@@ -30,8 +28,7 @@ namespace jvm
          *
          * Values correspond directly to JVM descriptor characters.
          */
-        enum Type : char
-        {
+        enum Type : char {
             Byte = 'B',
             Char = 'C',
             Double = 'D',

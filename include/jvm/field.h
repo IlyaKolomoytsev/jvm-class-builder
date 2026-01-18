@@ -5,16 +5,14 @@
 #include "class-file-element.h"
 #include "constant-utf-8-info.h"
 
-namespace jvm
-{
+namespace jvm {
     class Attribute;
 
-    class Field final : public ClassFileElement<Class>
-    {
+    class Field final : public ClassFileElement<Class> {
         friend class Class;
+
     public:
-        enum AccessFlag
-        {
+        enum AccessFlag {
             ACC_PUBLIC = 0x0001, ///< Declared public; may be accessed from outside its package.
             ACC_PRIVATE = 0x0002,
             ///< Declared private; accessible only within the defining class and other classes belonging to the same nest.
@@ -43,41 +41,41 @@ namespace jvm
          * Add attribute to field.
          * @param attribute Field attribute.
          */
-        void addAttribute(Attribute* attribute);
+        void addAttribute(Attribute *attribute);
 
         /**
          * Remove attribute from field.
          * @param attribute Field attribute.
          */
-        void removeAttribute(Attribute* attribute);
+        void removeAttribute(Attribute *attribute);
 
         /**
          * @return Access flags set.
          */
-        [[nodiscard]] const std::set<AccessFlag>* getAccessFlags() const;
+        [[nodiscard]] const std::set<AccessFlag> *getAccessFlags() const;
 
         /**
          * @return Constant of field name.
          */
-        [[nodiscard]] ConstantUtf8Info* getName() const;
+        [[nodiscard]] ConstantUtf8Info *getName() const;
 
         /**
          * @return Constant of field descriptor.
          */
-        [[nodiscard]] ConstantUtf8Info* getDescriptor() const;
+        [[nodiscard]] ConstantUtf8Info *getDescriptor() const;
 
         /**
          * @return Field attributes set.
          */
-        [[nodiscard]] const std::set<Attribute*>* getAttributes() const;
+        [[nodiscard]] const std::set<Attribute *> *getAttributes() const;
 
         /**
          * @return Class owner.
          */
-        [[nodiscard]] Class* getClass() const;
+        [[nodiscard]] Class *getClass() const;
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -88,7 +86,7 @@ namespace jvm
          * @param descriptor Pointer to UTF-8 constant with field descriptor.
          * @note The name and descriptor must belong to the same  owner.
          */
-        Field(ConstantUtf8Info* name, ConstantUtf8Info* descriptor);
+        Field(ConstantUtf8Info *name, ConstantUtf8Info *descriptor);
 
         /**
          * @brief Validates a raw JVM field access_flags bitmask.
@@ -115,9 +113,9 @@ namespace jvm
         static void validateFlags(uint16_t flags);
 
         std::set<AccessFlag> accessFlags_{}; ///< Access flags.
-        ConstantUtf8Info* name_ = nullptr; ///< String constant with field name.
-        ConstantUtf8Info* descriptor_ = nullptr; ///< String constant with field descriptor.
-        std::set<Attribute*> attributes_{}; ///< Attributes.
+        ConstantUtf8Info *name_ = nullptr; ///< String constant with field name.
+        ConstantUtf8Info *descriptor_ = nullptr; ///< String constant with field descriptor.
+        std::set<Attribute *> attributes_{}; ///< Attributes.
     };
 } // jvm
 

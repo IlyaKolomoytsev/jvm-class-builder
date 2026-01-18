@@ -5,22 +5,20 @@
 #include "constant-utf-8-info.h"
 #include "serializable.h"
 
-namespace jvm
-{
-    class Attribute : public Serializable
-    {
+namespace jvm {
+    class Attribute : public Serializable {
         friend class Class;
         friend class Field;
         friend class Method;
         friend class AttributeCode;
 
     public:
-        Attribute(ConstantUtf8Info* name);
+        Attribute(ConstantUtf8Info *name);
 
         /**
          * @return Attribute name constant.
          */
-        [[nodiscard]] ConstantUtf8Info* getName() const noexcept { return name_; }
+        [[nodiscard]] ConstantUtf8Info *getName() const noexcept { return name_; }
 
         /**
          * Is it class @{jvm::Class} attribute.
@@ -53,14 +51,14 @@ namespace jvm
         [[nodiscard]] virtual bool isCodeAttribute() const noexcept { return false; }
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] size_t getByteSize() const override;
 
         [[nodiscard]] virtual size_t getContentSizeInBytes() const = 0;
 
     private:
-        ConstantUtf8Info* name_ = nullptr; ///< Attribute name constant.
+        ConstantUtf8Info *name_ = nullptr; ///< Attribute name constant.
     };
 } // jvm
 

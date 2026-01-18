@@ -5,13 +5,11 @@
 
 #include "constant.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * Constant of utf8 string.
      */
-    class ConstantUtf8Info : public Constant
-    {
+    class ConstantUtf8Info : public Constant {
         friend class Class;
 
     public:
@@ -27,10 +25,10 @@ namespace jvm
          * @param string Utf8 string constant.
          * @param classOwner Pointer to class owner object.
          */
-        ConstantUtf8Info(std::string string, Class* classOwner);
+        ConstantUtf8Info(std::string string, Class *classOwner);
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 

@@ -6,8 +6,7 @@
 
 #include "class-file-element.h"
 
-namespace jvm
-{
+namespace jvm {
     class AttributeCode;
 
     /**
@@ -20,19 +19,16 @@ namespace jvm
      *
      * @note Instances are created and managed by @ref AttributeCode.
      */
-    class Instruction : public ClassFileElement<AttributeCode>
-    {
+    class Instruction : public ClassFileElement<AttributeCode> {
         friend class AttributeCode;
 
     public:
-        enum StrictCompare
-        {
+        enum StrictCompare {
             Greater, ///< '>'
             Less, ///< '<'
         };
 
-        enum Compare
-        {
+        enum Compare {
             Equal, ///< '=='
             NotEqual, ///< '!='
             LessThan, ///< '<'
@@ -46,8 +42,7 @@ namespace jvm
          *
          * Values match the JVM specification "atype" operand.
          */
-        enum Type:uint8_t
-        {
+        enum Type:uint8_t {
             BOOLEAN = 4,
             CHAR = 5,
             FLOAT = 6,
@@ -62,8 +57,7 @@ namespace jvm
         /**
          * @brief JVM opcode values.
          */
-        enum Command: uint8_t
-        {
+        enum Command: uint8_t {
             /// Oracle docs: <a href="https://docs.oracle.com/javase/specs/jvms/se16/html/jvms-6.html#jvms-6.5.nop">nop instruction</a>.
             INSTRUCTION_nop = 0x00,
             /// Oracle docs: <a href="https://docs.oracle.com/javase/specs/jvms/se16/html/jvms-6.html#jvms-6.5.aconst_null">aconst_null instruction</a>.
@@ -503,7 +497,7 @@ namespace jvm
          * @param attributeCode Owning code attribute.
          * @param command Instruction opcode.
          */
-        Instruction(AttributeCode* attributeCode, Command command);
+        Instruction(AttributeCode *attributeCode, Command command);
 
         /**
          * @brief Update the opcode of this instruction.
@@ -519,11 +513,11 @@ namespace jvm
          * @return Relative displacement.
          * @throws std::logic_error If the source or target instruction position is not set.
          */
-        [[nodiscard]] uint16_t calculateShift(Instruction* target) const;
+        [[nodiscard]] uint16_t calculateShift(Instruction *target) const;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
     private:
         /**

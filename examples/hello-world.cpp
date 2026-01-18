@@ -12,11 +12,10 @@
 
 using namespace jvm;
 
-int main()
-{
+int main() {
     Class helloWorldClass("HelloWorld", "java/lang/Object");
 
-    Method* mainMethod = helloWorldClass.getOrCreateMethod(
+    Method *mainMethod = helloWorldClass.getOrCreateMethod(
         "main",
         DescriptorMethod{
             std::nullopt,
@@ -33,7 +32,7 @@ int main()
     // --- constants for System.out.println("Hello, world!") ---
     // Field: java/lang/System.out : Ljava/io/PrintStream;
     auto descriptor_field_out = DescriptorField("java/io/PrintStream");
-    ConstantFieldref* systemOut = helloWorldClass.getOrCreateFieldrefConstant(
+    ConstantFieldref *systemOut = helloWorldClass.getOrCreateFieldrefConstant(
         "java/lang/System",
         "out",
         descriptor_field_out
@@ -45,18 +44,18 @@ int main()
     );
 
     // Method: java/io/PrintStream.println : (Ljava/lang/String;)V
-    ConstantMethodref* println = helloWorldClass.getOrCreateMethodrefConstant(
+    ConstantMethodref *println = helloWorldClass.getOrCreateMethodrefConstant(
         "java/io/PrintStream",
         "println",
         descriptor_method_println
     );
 
-    AttributeCode* code = mainMethod->getCodeAttribute();
+    AttributeCode *code = mainMethod->getCodeAttribute();
     *code
-        << code->GetStatic(systemOut)
-        << code->PushString("Hello, World!")
-        << code->InvokeVirtual(println)
-        << code->ReturnVoid();
+            << code->GetStatic(systemOut)
+            << code->PushString("Hello, World!")
+            << code->InvokeVirtual(println)
+            << code->ReturnVoid();
 
     std::ofstream file("HelloWorld.class", std::ios::binary);
     helloWorldClass.writeTo(file);

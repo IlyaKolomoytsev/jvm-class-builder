@@ -8,8 +8,7 @@
 #include "owner-aware.h"
 #include "serializable.h"
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Base class for elements of a JVM class file with explicit ownership.
      *
@@ -20,9 +19,8 @@ namespace jvm
      * @note The owner type is declared as a friend to allow controlled construction
      *       and internal modification.
      */
-    template <class Owner>
-    class ClassFileElement : public OwnerAware<Owner>, protected Serializable
-    {
+    template<class Owner>
+    class ClassFileElement : public OwnerAware<Owner>, protected Serializable {
         friend Owner;
 
     public:
@@ -32,16 +30,17 @@ namespace jvm
          * @param owner Pointer to the owning object.
          * @pre @p owner must not be null.
          */
-        explicit ClassFileElement(Owner* owner) : OwnerAware<Owner>(owner)
-        {
+        explicit ClassFileElement(Owner *owner) : OwnerAware<Owner>(owner) {
         }
 
         /// Copying is disabled to preserve ownership semantics.
-        ClassFileElement(const ClassFileElement&) = delete;
-        ClassFileElement& operator=(const ClassFileElement&) = delete;
+        ClassFileElement(const ClassFileElement &) = delete;
 
-        ClassFileElement(ClassFileElement&&) = default;
-        ClassFileElement& operator=(ClassFileElement&&) = default;
+        ClassFileElement &operator=(const ClassFileElement &) = delete;
+
+        ClassFileElement(ClassFileElement &&) = default;
+
+        ClassFileElement &operator=(ClassFileElement &&) = default;
     };
 
 
@@ -54,15 +53,16 @@ namespace jvm
      * This specialization exposes the @ref Serializable interface publicly,
      * allowing external serialization of the root object.
      */
-    template <>
-    class ClassFileElement<void> : public Serializable
-    {
+    template<>
+    class ClassFileElement<void> : public Serializable {
     public:
-        ClassFileElement(const ClassFileElement&) = delete;
-        ClassFileElement& operator=(const ClassFileElement&) = delete;
+        ClassFileElement(const ClassFileElement &) = delete;
 
-        ClassFileElement(ClassFileElement&&) = default;
-        ClassFileElement& operator=(ClassFileElement&&) = default;
+        ClassFileElement &operator=(const ClassFileElement &) = delete;
+
+        ClassFileElement(ClassFileElement &&) = default;
+
+        ClassFileElement &operator=(ClassFileElement &&) = default;
     };
 } // jvm
 

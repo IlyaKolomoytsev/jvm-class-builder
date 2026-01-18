@@ -6,13 +6,11 @@
 
 using namespace jvm;
 
-Attribute::Attribute(ConstantUtf8Info* name) : name_(name)
-{
+Attribute::Attribute(ConstantUtf8Info *name) : name_(name) {
     assert(name_ != nullptr);
 }
 
-void Attribute::writeTo(std::ostream& os) const
-{
+void Attribute::writeTo(std::ostream &os) const {
     // u2 attribute_name_index;
     auto nameIndex = getName()->getIndex();
     internal::Utils::writeBigEndian(os, static_cast<uint16_t>(nameIndex));
@@ -22,7 +20,6 @@ void Attribute::writeTo(std::ostream& os) const
     internal::Utils::writeBigEndian(os, static_cast<uint32_t>(length));
 }
 
-size_t Attribute::getByteSize() const
-{
+size_t Attribute::getByteSize() const {
     return 6 + getContentSizeInBytes();
 }

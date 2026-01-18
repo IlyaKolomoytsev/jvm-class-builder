@@ -4,8 +4,7 @@
 #include <cstddef>
 #include <iosfwd>
 
-namespace jvm
-{
+namespace jvm {
     /**
      * @brief Interface for binary-serializable objects.
      *
@@ -18,8 +17,7 @@ namespace jvm
      * This interface is used as a common abstraction for JVM class-file
      * structures (attributes, instructions, constants, etc.).
      */
-    class Serializable
-    {
+    class Serializable {
     public:
         /**
          * @brief Virtual destructor.
@@ -33,7 +31,7 @@ namespace jvm
          *
          * @param os Output stream to write to.
          */
-        virtual void writeTo(std::ostream& os) const = 0;
+        virtual void writeTo(std::ostream &os) const = 0;
 
         /**
          * @brief Get the size of the serialized object in bytes.
@@ -48,8 +46,7 @@ namespace jvm
      *
      * Calls @ref Serializable::writeTo.
      */
-    inline std::ostream& operator<<(std::ostream& os, const Serializable& obj)
-    {
+    inline std::ostream &operator<<(std::ostream &os, const Serializable &obj) {
         obj.writeTo(os);
         return os;
     }
@@ -59,8 +56,7 @@ namespace jvm
      *
      * Equivalent to dereferencing the pointer and calling the reference overload.
      */
-    inline std::ostream& operator<<(std::ostream& os, const Serializable* obj)
-    {
+    inline std::ostream &operator<<(std::ostream &os, const Serializable *obj) {
         return os << *obj;
     }
 } //jvm

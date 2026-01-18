@@ -4,23 +4,19 @@
 
 using namespace jvm;
 
-Instruction* Label::getInstruction() const
-{
+Instruction *Label::getInstruction() const {
     return instruction_;
 }
 
-Label::Label(AttributeCode* codeAttributeOwner) : OwnerAware(codeAttributeOwner)
-{
+Label::Label(AttributeCode *codeAttributeOwner) : OwnerAware(codeAttributeOwner) {
     assert(codeAttributeOwner != nullptr);
 }
 
-bool Label::isInitialized() const
-{
+bool Label::isInitialized() const {
     return instruction_ != nullptr;
 }
 
-void Label::setInstruction(Instruction* instruction)
-{
+void Label::setInstruction(Instruction *instruction) {
     assert(instruction != nullptr);
     assert(instruction_ == nullptr);
 

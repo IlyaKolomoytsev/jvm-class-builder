@@ -6,25 +6,23 @@
 #include "constant-name-and-type.h"
 #include "constant.h"
 
-namespace jvm
-{
-    class ConstantInterfaceMethodref : public Constant
-    {
+namespace jvm {
+    class ConstantInterfaceMethodref : public Constant {
         friend class Class;
 
     public:
         /**
          * @return Class constant.
          */
-        [[nodiscard]] ConstantClass* getClass() const;
+        [[nodiscard]] ConstantClass *getClass() const;
 
         /**
          * @return Interface method name and type constant.
          */
-        [[nodiscard]] ConstantNameAndType* getNameAndType() const;
+        [[nodiscard]] ConstantNameAndType *getNameAndType() const;
 
     protected:
-        void writeTo(std::ostream& os) const override;
+        void writeTo(std::ostream &os) const override;
 
         [[nodiscard]] std::size_t getByteSize() const override;
 
@@ -34,10 +32,10 @@ namespace jvm
          * @param classConstant Class constant.
          * @param nameAndTypeConstant Interface method name and type constant.
          */
-        ConstantInterfaceMethodref(ConstantClass* classConstant, ConstantNameAndType* nameAndTypeConstant);
+        ConstantInterfaceMethodref(ConstantClass *classConstant, ConstantNameAndType *nameAndTypeConstant);
 
-        ConstantClass* class_; ///< Class constant.
-        ConstantNameAndType* nameAndType_; ///< Interface method name and type constant.
+        ConstantClass *class_; ///< Class constant.
+        ConstantNameAndType *nameAndType_; ///< Interface method name and type constant.
     };
 } //jvm
 
