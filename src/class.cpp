@@ -632,6 +632,20 @@ void Class::writeTo(std::ostream& os) const
     fixClassBinary(os, std::vector<unsigned char>{str.begin(), str.end()});
 }
 
+void Class::writeToProject(const std::filesystem::path& projectDir) const
+{
+    std::filesystem::create_directories(projectDir);
+
+    auto filePath = projectDir / (thisClassConstant_->getName()->getString() + ".class");
+
+    std::ofstream file(filePath, std::ios::binary);
+    if (!file)
+    {
+        throw std::ios_base::failure("Failed to open the file for writing.");
+    }
+    writeTo(file);
+}
+
 std::size_t Class::getByteSize() const
 {
     size_t size = 0;

@@ -58,7 +58,5 @@ int main()
         << code->InvokeVirtual(println)
         << code->ReturnVoid();
 
-    std::ofstream file("HelloWorld.class", std::ios::binary);
-    helloWorldClass.writeTo(file);
-    file.close();
+    helloWorldClass.writeToProject("target");
 }
