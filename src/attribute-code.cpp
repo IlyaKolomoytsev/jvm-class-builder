@@ -970,10 +970,12 @@ AttributeCode &AttributeCode::addLabel(Label *label) {
     return *this;
 }
 
-ExceptionHandler *AttributeCode::addTryCatch(Label *tryStartLabel, Label *tryFinishLabel, Label *catchStartLabel,
+ExceptionHandler *AttributeCode::addTryCatch(Label *tryStartLabel,
+                                             Label *tryFinishLabel,
+                                             Label *catchStartLabel,
                                              ConstantClass *catchClass) {
     auto *handler = new ExceptionHandler(tryStartLabel, tryFinishLabel, catchStartLabel, catchClass, this);
-    exceptionHandlers_.insert(handler);
+    exceptionHandlers_.push_back(handler); // keep order!
     return handler;
 }
 

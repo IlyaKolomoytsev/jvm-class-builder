@@ -3496,7 +3496,7 @@ namespace jvm {
         /// Size of exceptions handlers set measured in bytes (exception_table structure).
         uint16_t exceptionsHandlersByteSize_ = 0;
         std::vector<Instruction *> code_{}; ///< Bytecode instructions array.
-        std::set<ExceptionHandler *> exceptionHandlers_{}; ///< Exception handlers set.
+        std::vector<ExceptionHandler *> exceptionHandlers_; ///< Exception handlers set.
         std::set<Attribute *> attributes_{}; ///< Attributes.
 
         std::set<Label *> labelsOnCurrentStep_{}; ///< Set of labels on current step.
