@@ -2,6 +2,7 @@
 #define JVM__CLASS_H
 
 #include <cstdint>
+#include <filesystem>
 #include <set>
 #include <span>
 #include <string>
@@ -514,6 +515,8 @@ namespace jvm
 
         void writeTo(std::ostream& os) const override;
 
+        void writeToProject(const std::filesystem::path& projectDir) const;
+
         /**
          * @return Access flags set.
          */
@@ -565,8 +568,8 @@ namespace jvm
         std::vector<Constant*> constants_{};
         uint16_t nextCpIndex = 1; // 0 index is not available for writing
         std::set<AccessFlag> accessFlags_{};
-        Constant* thisClassConstant_ = nullptr;
-        Constant* superClassConstant_ = nullptr;
+        ConstantClass* thisClassConstant_ = nullptr;
+        ConstantClass* superClassConstant_ = nullptr;
         std::set<Constant*> interfacesConstant_{};
         std::set<Field*> fields_;
         std::set<Method*> methods_;
