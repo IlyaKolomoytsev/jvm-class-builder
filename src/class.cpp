@@ -546,6 +546,11 @@ void Class::removeFlag(AccessFlag flag)
     accessFlags_.erase(flag);
 }
 
+void Class::addInterface(ConstantClass* interface)
+{
+    interfacesConstant_.insert(interface);
+}
+
 void Class::writeTo(std::ostream& os) const
 {
     std::ostringstream buffer;

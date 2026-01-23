@@ -504,6 +504,8 @@ namespace jvm
          */
         void removeFlag(AccessFlag flag);
 
+        void addInterface(ConstantClass* interface);
+
         void writeTo(std::ostream& os) const override;
 
         void writeToProject(const std::filesystem::path& projectDir) const;
