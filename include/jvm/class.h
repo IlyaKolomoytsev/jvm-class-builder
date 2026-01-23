@@ -94,7 +94,6 @@ namespace jvm
         ConstantClass* getOrCreateClassConstant(ConstantUtf8Info* name);
         //endregion
         //region GET OR CREATE FIELDREF CONSTANT
-
         /**
          * @brief Returns an existing @ref ConstantFieldref "Fieldref constant" from this class's constant pool,
          *        or creates and returns a new one.
@@ -155,7 +154,6 @@ namespace jvm
                                                       ConstantNameAndType* nameAndTypeConstant);
         //endregion
         //region GET OR CREATE METHODREF CONSTANT
-
         /**
          * @brief Returns an existing @ref ConstantMethodref "Methodref constant" from this class's constant pool,
          *        or creates and returns a new one.
@@ -219,8 +217,6 @@ namespace jvm
                                                         ConstantNameAndType* nameAndTypeConstant);
         //endregion
         //region GET OR CREATE INTERFACE METHODREF CONSTANT
-
-
         /**
          * @brief Returns an existing @ref ConstantInterfaceMethodref "InterfaceMethodref constant" from this class's constant pool,
          *        or creates and returns a new one.
@@ -340,7 +336,6 @@ namespace jvm
         ConstantDouble* getOrCreateDoubleConstant(double value);
         //endregion
         //region GET OR CREATE NAME AND TYPE CONSTANT
-
         /**
          * @brief Returns an existing @ref ConstantNameAndType "Name-and-type constant" from this class's constant pool,
          *        or creates and returns a new one.
@@ -396,9 +391,7 @@ namespace jvm
          */
         ConstantUtf8Info* getOrCreateUtf8Constant(const std::string& value);
         //endregion
-
         //region GET OR CREATE FIELD
-
         /**
         * @brief Returns an existing @ref Field "field" with the specified name and descriptor,
          *        or creates and returns a new one.
@@ -446,9 +439,8 @@ namespace jvm
           * @return Field instance owned by this class.
           */
         Field* getOrCreateField(ConstantUtf8Info* nameConstant, ConstantUtf8Info* descriptorConstant);
-
+        //endregion
         //region GET OR CREATE METHOD
-
         /**
         * @brief Returns an existing @ref Method "method" with the specified name and descriptor,
          *        or creates and returns a new one.
@@ -498,7 +490,6 @@ namespace jvm
          */
         Method* getOrCreateMethod(ConstantUtf8Info* nameConstant, ConstantUtf8Info* descriptorConstant);
         //endregion
-
         std::span<Constant*> constants();
 
         /**
