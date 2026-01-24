@@ -651,6 +651,11 @@ void Class::writeToProject(const std::filesystem::path& projectDir) const
     writeTo(file);
 }
 
+ConstantClass* Class::getThisClassConstant() const
+{
+    return thisClassConstant_;
+}
+
 std::size_t Class::getByteSize() const
 {
     size_t size = 0;

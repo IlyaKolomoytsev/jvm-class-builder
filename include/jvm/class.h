@@ -510,6 +510,8 @@ namespace jvm
 
         void writeToProject(const std::filesystem::path& projectDir) const;
 
+        [[nodiscard]] ConstantClass* getThisClassConstant() const;
+
         /**
          * @return Access flags set.
          */
