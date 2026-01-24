@@ -111,6 +111,7 @@ add_library(jvm-class-builder
         src/internal/utils.cpp
         src/descriptor-field.cpp
         src/descriptor-method.cpp
+        src/internal/jvm-manager.cpp
 )
 
 target_compile_features(jvm-class-builder PUBLIC cxx_std_20)
