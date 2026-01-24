@@ -28,7 +28,7 @@
 #include "jvm/field.h"
 #include "jvm/method.h"
 #include "jvm/internal/utils.h"
-#include "java-internal-paths.h"
+#include "internal/jvm-manager.h"
 
 namespace fs = std::filesystem;
 using namespace jvm;
@@ -845,82 +845,53 @@ void Class::fixClassBinary(std::ostream& os, const std::span<const unsigned char
     //delete temp file
     std::filesystem::remove(pathToTempFile);
 #else
+    JNIEnv* env = JvmManager::getJniEnv();
 
-    JavaVM* jvm = nullptr;
-    JNIEnv* env = nullptr;
-
-    std::string classpath = std::string("-Djava.class.path=") + JAVA_INTERNAL_JAR;
-    JavaVMOption options[1];
-    options[0].optionString = classpath.data();
-    JavaVMInitArgs vm_args{};
-    vm_args.version = JNI_VERSION_1_8;
-    vm_args.nOptions = 1;
-    vm_args.options = options;
-    vm_args.ignoreUnrecognized = JNI_FALSE;
-
-    // run jvm
-    jint correctJvmCreation = JNI_CreateJavaVM(&jvm, reinterpret_cast<void**>(&env), &vm_args);
-    if (correctJvmCreation != JNI_OK || !env)
+    // find class
+    jclass fixClass = env->FindClass("compilator/fix/FixClass");
+    if (!fixClass)
     {
-        throw std::runtime_error("Failed to create JVM");
+        throw std::logic_error("FixClass not found");
     }
 
-    try
+    // find static method
+    jmethodID fixMethod = env->GetStaticMethodID(fixClass, "fix", "([B)[B");
+    if (!fixMethod)
     {
-        // find class
-        jclass fixClass = env->FindClass("compilator/fix/FixClass");
-        if (!fixClass)
-        {
-            throw std::logic_error("FixClass not found");
-        }
-
-        // find static method
-        jmethodID fixMethod = env->GetStaticMethodID(fixClass, "fix", "([B)[B");
-        if (!fixMethod)
-        {
-            throw std::logic_error("FixClass.fix(byte[]) not found");
-        }
-
-        // convert c++ byte array to jvm byte array
-        jbyteArray inputArray = env->NewByteArray(static_cast<jsize>(data.size()));
-        env->SetByteArrayRegion(
-            inputArray, 0,
-            static_cast<jsize>(data.size()),
-            reinterpret_cast<const jbyte*>(data.data()));
-
-        // call fix method (method provide jByteArray)
-        auto resultArray = static_cast<jbyteArray>(env->CallStaticObjectMethod(fixClass, fixMethod, inputArray));
-
-        if (env->ExceptionCheck())
-        {
-            env->ExceptionDescribe();
-            env->ExceptionClear();
-            throw std::runtime_error("Java exception in FixClass.fix()");
-        }
-
-        // convert jvm byte array to c++ byte array
-        jsize resultSize = env->GetArrayLength(resultArray);
-        std::vector<unsigned char> result(resultSize);
-        env->GetByteArrayRegion(
-            resultArray, 0, resultSize,
-            reinterpret_cast<jbyte*>(result.data()));
-
-        // write data to stream
-        os.write(reinterpret_cast<const char*>(result.data()), static_cast<std::streamsize>(result.size()));
-
-        // clear refs
-        env->DeleteLocalRef(inputArray);
-        env->DeleteLocalRef(resultArray);
-        env->DeleteLocalRef(fixClass);
-    }
-    catch (...)
-    {
-        // destroy jvm
-        jvm->DestroyJavaVM();
-        throw;
+        throw std::logic_error("FixClass.fix(byte[]) not found");
     }
 
-    // destroy jvm
-    jvm->DestroyJavaVM();
+    // convert c++ byte array to jvm byte array
+    jbyteArray inputArray = env->NewByteArray(static_cast<jsize>(data.size()));
+    env->SetByteArrayRegion(
+        inputArray, 0,
+        static_cast<jsize>(data.size()),
+        reinterpret_cast<const jbyte*>(data.data()));
+
+    // call fix method (method provide jByteArray)
+    auto resultArray = static_cast<jbyteArray>(env->CallStaticObjectMethod(fixClass, fixMethod, inputArray));
+
+    if (env->ExceptionCheck())
+    {
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+        throw std::runtime_error("Java exception in FixClass.fix()");
+    }
+
+    // convert jvm byte array to c++ byte array
+    jsize resultSize = env->GetArrayLength(resultArray);
+    std::vector<unsigned char> result(resultSize);
+    env->GetByteArrayRegion(
+        resultArray, 0, resultSize,
+        reinterpret_cast<jbyte*>(result.data()));
+
+    // write data to stream
+    os.write(reinterpret_cast<const char*>(result.data()), static_cast<std::streamsize>(result.size()));
+
+    // clear refs
+    env->DeleteLocalRef(inputArray);
+    env->DeleteLocalRef(resultArray);
+    env->DeleteLocalRef(fixClass);
+
 #endif
 }
